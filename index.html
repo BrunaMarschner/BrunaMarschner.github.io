@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bruna Marschner — Data Science & AI</title>
+<meta name="description" content="Data Scientist, AI Engineer, Business Analyst & Product Owner. Portfolio de Bruna Marschner.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-0: #060610;
+  --bg-1: #0c0c1d;
+  --bg-2: #12122a;
+  --bg-card: #14142e;
+  --text-0: #eeedf5;
+  --text-1: #b0adc4;
+  --text-2: #706d88;
+  --text-3: #4a4762;
+  --purple: #8b5cf6;
+  --purple-dim: rgba(139, 92, 246, 0.15);
+  --pink: #ec4899;
+  --pink-dim: rgba(236, 72, 153, 0.12);
+  --cyan: #22d3ee;
+  --cyan-dim: rgba(34, 211, 238, 0.12);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245, 158, 11, 0.10);
+  --green: #10b981;
+  --gradient-brand: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #22d3ee 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(236,72,153,0.1));
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(139,92,246,0.3);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-0);
+  color: var(--text-0);
+  overflow-x: hidden;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--purple); color: #fff; }
+a { color: inherit; text-decoration: none; }
+
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:0.018;
+  pointer-events:none;
+  z-index:10000;
+}
+
+/* NAV */
+.nav {
+  position:fixed; top:0; width:100%; z-index:999;
+  padding: 1rem 2.5rem;
+  display:flex; justify-content:space-between; align-items:center;
+  backdrop-filter: blur(24px);
+  background: rgba(6,6,16,0.6);
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.4s var(--transition), background 0.4s;
+}
+.nav.compact { padding: 0.65rem 2.5rem; background: rgba(6,6,16,0.92); }
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+}
+.nav-brand span {
+  background: var(--gradient-brand);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.nav-menu { display:flex; gap:1.8rem; list-style:none; }
+.nav-menu a {
+  font-size:0.8rem; font-weight:500;
+  text-transform:uppercase; letter-spacing:0.08em;
+  color: var(--text-2);
+  transition: color 0.3s;
+  position:relative;
+}
+.nav-menu a::after {
+  content:''; position:absolute;
+  left:0; bottom:-4px;
+  width:0; height:2px;
+  background: var(--purple);
+  transition: width 0.3s;
+}
+.nav-menu a:hover { color: var(--text-0); }
+.nav-menu a:hover::after { width:100%; }
+.nav-toggle {
+  display:none;
+  background:none; border:none; cursor:pointer; padding:6px;
+  flex-direction:column; gap:5px;
+}
+.nav-toggle span {
+  width:22px; height:2px; background: var(--text-0);
+  transition: all 0.3s;
+}
+
+/* HERO */
+.hero {
+  position:relative;
+  min-height:100vh;
+  display:flex; align-items:center;
+  padding: 8rem 2.5rem 5rem;
+  overflow:hidden;
+}
+#neuralCanvas {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  z-index:0;
+}
+.hero::after {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(139,92,246,0.12), transparent),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(236,72,153,0.08), transparent),
+    linear-gradient(to bottom, transparent 70%, var(--bg-0));
+  z-index:1;
+  pointer-events:none;
+}
+.hero-inner {
+  position:relative; z-index:2;
+  max-width:780px;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:0.55rem;
+  font-family: var(--font-mono); font-size:0.72rem;
+  color: var(--cyan);
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--cyan-dim);
+  border-radius:100px;
+  background: rgba(34,211,238,0.06);
+  margin-bottom:1.6rem;
+  animation: fadeUp 0.7s var(--transition) both;
+}
+.pulse-dot {
+  width:7px; height:7px;
+  border-radius:50%;
+  background: var(--green);
+  animation: glow 2s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6.5vw, 5.4rem);
+  font-weight:400;
+  line-height:1.06;
+  margin-bottom:1.4rem;
+  animation: fadeUp 0.7s 0.12s var(--transition) both;
+}
+.hero h1 em {
+  font-style:italic;
+  background: var(--gradient-brand);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-lead {
+  font-size:1.1rem;
+  color: var(--text-1);
+  max-width:540px;
+  margin-bottom:2.2rem;
+  animation: fadeUp 0.7s 0.24s var(--transition) both;
+}
+.hero-actions {
+  display:flex; gap:0.9rem; flex-wrap:wrap;
+  animation: fadeUp 0.7s 0.36s var(--transition) both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* BUTTONS */
+.btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  padding: 0.85rem 1.9rem;
+  font-family: var(--font-body);
+  font-size:0.9rem; font-weight:600;
+  border-radius: var(--radius-md);
+  border: none; cursor:pointer;
+  transition: all 0.35s var(--transition);
+}
+.btn-fill {
+  background: var(--purple);
+  color:#fff;
+  box-shadow: 0 4px 24px rgba(139,92,246,0.35);
+}
+.btn-fill:hover {
+  transform:translateY(-2px);
+  box-shadow: 0 8px 32px rgba(139,92,246,0.45);
+}
+.btn-outline {
+  background:transparent;
+  color: var(--text-0);
+  border: 1px solid var(--border-hover);
+}
+.btn-outline:hover {
+  background: var(--purple-dim);
+  border-color: var(--purple);
+}
+
+/* MARQUEE */
+.marquee-wrap {
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background: var(--bg-1);
+  padding: 1rem 0;
+  overflow:hidden;
+}
+.marquee-track {
+  display:flex; width:max-content;
+  animation: scrollx 35s linear infinite;
+}
+.marquee-track:hover { animation-play-state:paused; }
+.marquee-item {
+  display:flex; align-items:center; gap:0.45rem;
+  padding:0.45rem 1.4rem;
+  font-family: var(--font-mono); font-size:0.78rem;
+  color: var(--text-2);
+  white-space:nowrap;
+}
+.mdot {
+  width:4px; height:4px; border-radius:50%;
+  background: var(--purple);
+  flex-shrink:0;
+}
+@keyframes scrollx { to { transform:translateX(-50%); } }
+
+/* SECTIONS */
+.section {
+  padding: 6rem 2.5rem;
+  max-width:1080px;
+  margin:0 auto;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size:0.7rem; text-transform:uppercase;
+  letter-spacing:0.14em;
+  color: var(--purple);
+  margin-bottom:0.5rem;
+}
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem,3.8vw,2.8rem);
+  font-weight:400;
+  margin-bottom:0.8rem;
+}
+.section-desc {
+  color: var(--text-1);
+  font-size:1rem;
+  max-width:560px;
+  margin-bottom:3rem;
+}
+.sr { opacity:0; transform:translateY(28px); transition: all 0.65s var(--transition); }
+.sr.visible { opacity:1; transform:translateY(0); }
+
+/* ABOUT */
+.about-layout {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:3rem;
+  align-items:start;
+}
+.about-prose p {
+  color: var(--text-1);
+  margin-bottom:1.1rem;
+  font-size:0.97rem;
+}
+.about-prose strong { color: var(--text-0); }
+.metrics-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+.metric {
+  background: var(--bg-card);
+  border:1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding:1.6rem;
+  transition: all 0.35s var(--transition);
+}
+.metric:hover {
+  border-color: var(--purple);
+  transform:translateY(-3px);
+  box-shadow: 0 12px 36px rgba(139,92,246,0.12);
+}
+.metric-value {
+  font-family: var(--font-display);
+  font-size:2rem;
+  background: var(--gradient-brand);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.metric-label {
+  font-size:0.78rem;
+  color: var(--text-2);
+  margin-top:0.2rem;
+}
+
+/* EXPERTISE */
+.pillars {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:1.3rem;
+}
+.pillar {
+  background: var(--bg-card);
+  border:1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding:2rem 1.8rem;
+  position:relative;
+  overflow:hidden;
+  transition: all 0.4s var(--transition);
+}
+.pillar::before {
+  content:'';
+  position:absolute; top:0; left:0;
+  width:100%; height:3px;
+  opacity:0;
+  transition: opacity 0.4s;
+}
+.pillar:hover {
+  border-color: var(--border-hover);
+  transform:translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+}
+.pillar:hover::before { opacity:1; }
+.pillar[data-a="p"]::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+.pillar[data-a="k"]::before { background: linear-gradient(90deg, var(--pink), var(--amber)); }
+.pillar[data-a="c"]::before { background: linear-gradient(90deg, var(--cyan), var(--purple)); }
+.pillar[data-a="a"]::before { background: linear-gradient(90deg, var(--amber), var(--pink)); }
+.pillar[data-a="g"]::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.pillar-icon {
+  width:44px; height:44px;
+  border-radius: var(--radius-sm);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem;
+  margin-bottom:1.1rem;
+}
+.pillar h3 { font-size:1.05rem; font-weight:600; margin-bottom:0.5rem; }
+.pillar p { font-size:0.84rem; color: var(--text-1); line-height:1.65; }
+.tags { display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.9rem; }
+.tag {
+  font-family: var(--font-mono);
+  font-size:0.65rem;
+  padding:0.2rem 0.55rem;
+  border-radius:5px;
+}
+.tag-p { background: var(--purple-dim); color: var(--purple); }
+.tag-k { background: var(--pink-dim); color: var(--pink); }
+.tag-c { background: var(--cyan-dim); color: var(--cyan); }
+.tag-a { background: var(--amber-dim); color: var(--amber); }
+
+/* TIMELINE */
+.timeline {
+  position:relative;
+  padding-left:2.8rem;
+}
+.timeline::before {
+  content:'';
+  position:absolute; left:0; top:0; bottom:0;
+  width:2px;
+  background: linear-gradient(to bottom, var(--purple), var(--pink), var(--cyan), transparent);
+  border-radius:2px;
+}
+.tl-item {
+  position:relative;
+  margin-bottom:2.8rem;
+  padding-left:1.2rem;
+}
+.tl-item::before {
+  content:'';
+  position:absolute;
+  left:-3rem; top:0.55rem;
+  width:10px; height:10px;
+  border-radius:50%;
+  background: var(--purple);
+  border:3px solid var(--bg-0);
+  box-shadow: 0 0 0 4px var(--purple-dim);
+}
+.tl-item.now::before {
+  background: var(--green);
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.25);
+  animation: glow 2s ease-in-out infinite;
+}
+.tl-date {
+  font-family: var(--font-mono);
+  font-size:0.72rem;
+  color: var(--purple);
+  margin-bottom:0.25rem;
+}
+.tl-role { font-size:1.15rem; font-weight:600; margin-bottom:0.15rem; }
+.tl-org { font-size:0.88rem; color: var(--text-2); margin-bottom:0.7rem; }
+.tl-desc { font-size:0.88rem; color: var(--text-1); line-height:1.7; }
+
+/* PROJECTS */
+.projects-grid {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:1.3rem;
+}
+.proj {
+  background: var(--bg-card);
+  border:1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding:2rem;
+  transition: all 0.4s var(--transition);
+  display:flex; flex-direction:column;
+}
+.proj:hover {
+  border-color: var(--border-hover);
+  transform:translateY(-3px);
+  box-shadow: 0 14px 44px rgba(0,0,0,0.3);
+}
+.proj.featured {
+  grid-column:span 2;
+  background: var(--gradient-subtle);
+  border-color: rgba(139,92,246,0.2);
+}
+.proj-type {
+  font-family: var(--font-mono);
+  font-size:0.66rem;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  margin-bottom:0.7rem;
+}
+.proj h3 { font-size:1.12rem; font-weight:600; margin-bottom:0.5rem; }
+.proj p { font-size:0.85rem; color: var(--text-1); line-height:1.65; flex:1; }
+
+/* AWARDS */
+.awards-row {
+  display:flex; gap:1.2rem;
+  overflow-x:auto;
+  padding-bottom:0.8rem;
+  scrollbar-width:none;
+}
+.awards-row::-webkit-scrollbar { display:none; }
+.award {
+  min-width:260px; flex-shrink:0;
+  background: var(--bg-card);
+  border:1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding:1.4rem 1.6rem;
+  transition: all 0.3s var(--transition);
+}
+.award:hover {
+  border-color: var(--amber);
+  transform:translateY(-2px);
+}
+.award-flag { font-size:1.7rem; margin-bottom:0.7rem; }
+.award h4 { font-size:0.92rem; font-weight:600; margin-bottom:0.25rem; }
+.award p { font-size:0.78rem; color: var(--text-1); }
+.award-year {
+  font-family: var(--font-mono);
+  font-size:0.68rem;
+  color: var(--amber);
+  margin-top:0.5rem;
+}
+
+/* EDUCATION */
+.edu {
+  background: var(--bg-card);
+  border:1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding:1.8rem 2rem;
+  margin-bottom:1.2rem;
+  transition: border-color 0.3s;
+}
+.edu:hover { border-color: var(--border-hover); }
+.edu h3 { font-size:1.08rem; font-weight:600; margin-bottom:0.2rem; }
+.edu-inst { font-size:0.88rem; color: var(--purple); margin-bottom:0.25rem; }
+.edu-period {
+  font-family: var(--font-mono);
+  font-size:0.7rem;
+  color: var(--text-3);
+  margin-bottom:0.7rem;
+}
+.chip-row { display:flex; flex-wrap:wrap; gap:0.35rem; }
+.chip {
+  font-size:0.7rem;
+  padding:0.22rem 0.6rem;
+  border-radius:5px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+}
+
+/* CONTACT */
+#contact { text-align:center; }
+#contact .section-desc { margin-left:auto; margin-right:auto; }
+.contact-grid {
+  display:flex; justify-content:center; gap:0.9rem; flex-wrap:wrap;
+  margin-top:2rem;
+}
+.contact-card {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  padding:0.95rem 1.7rem;
+  background: var(--bg-card);
+  border:1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size:0.88rem; font-weight:500;
+  transition: all 0.35s var(--transition);
+}
+.contact-card:hover {
+  border-color: var(--purple);
+  transform:translateY(-2px);
+  box-shadow: 0 8px 28px rgba(139,92,246,0.15);
+}
+.contact-card svg { width:18px; height:18px; fill:currentColor; opacity:0.7; }
+
+/* FOOTER */
+.footer {
+  padding:2.5rem 2rem;
+  text-align:center;
+  border-top:1px solid var(--border);
+}
+.footer p { font-size:0.78rem; color: var(--text-3); }
+.footer span { color: var(--pink); }
+
+/* RESPONSIVE */
+@media(max-width:960px) {
+  .pillars { grid-template-columns:1fr 1fr; }
+  .projects-grid { grid-template-columns:1fr; }
+  .proj.featured { grid-column:span 1; }
+  .about-layout { grid-template-columns:1fr; }
+}
+@media(max-width:640px) {
+  .nav-menu { display:none; }
+  .nav-toggle { display:flex; }
+  .nav-menu.open {
+    display:flex; flex-direction:column;
+    position:absolute; top:100%; left:0; width:100%;
+    background:rgba(6,6,16,0.96);
+    backdrop-filter:blur(20px);
+    padding:1.5rem 2.5rem;
+    border-bottom:1px solid var(--border);
+    gap:1.1rem;
+  }
+  .pillars { grid-template-columns:1fr; }
+  .hero { padding:7rem 1.5rem 4rem; }
+  .section { padding:4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="#" class="nav-brand">bruna<span>.</span></a>
+  <ul class="nav-menu" id="navMenu">
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#experience">Experiência</a></li>
+    <li><a href="#projects">Projetos</a></li>
+    <li><a href="#education">Formação</a></li>
+    <li><a href="#contact">Contato</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas id="neuralCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span>
+      Disponível para oportunidades
+    </div>
+    <h1>Dados se tornam<br><em>inteligência.</em></h1>
+    <p class="hero-lead">
+      Data Scientist & AI · Business Analytics · Product Owner.
+      Construo modelos, dashboards e produtos que conectam ciência de dados ao impacto real.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-fill">Ver projetos →</a>
+      <a href="#contact" class="btn btn-outline">Falar comigo</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item"><span class="mdot"></span>Python</div>
+    <div class="marquee-item"><span class="mdot"></span>TensorFlow</div>
+    <div class="marquee-item"><span class="mdot"></span>PyTorch</div>
+    <div class="marquee-item"><span class="mdot"></span>Scikit-Learn</div>
+    <div class="marquee-item"><span class="mdot"></span>Deep Learning</div>
+    <div class="marquee-item"><span class="mdot"></span>NLP</div>
+    <div class="marquee-item"><span class="mdot"></span>Computer Vision</div>
+    <div class="marquee-item"><span class="mdot"></span>Power BI</div>
+    <div class="marquee-item"><span class="mdot"></span>Looker Studio</div>
+    <div class="marquee-item"><span class="mdot"></span>SQL</div>
+    <div class="marquee-item"><span class="mdot"></span>Google Analytics</div>
+    <div class="marquee-item"><span class="mdot"></span>Swift / SwiftUI</div>
+    <div class="marquee-item"><span class="mdot"></span>Big Data</div>
+    <div class="marquee-item"><span class="mdot"></span>Cloud Computing</div>
+    <div class="marquee-item"><span class="mdot"></span>Scrum / Lean</div>
+    <div class="marquee-item"><span class="mdot"></span>Product Ownership</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section sr" id="about">
+  <div class="section-label">// sobre</div>
+  <div class="section-heading">Dados, produto & criação.</div>
+  <div class="about-layout">
+    <div class="about-prose">
+      <p>Sou estudante de <strong>Ciência de Dados e Inteligência Artificial</strong> na PUCRS (7º semestre), com disciplinas de pós-graduação em Deep Learning, Big Data e Computação em Nuvem cursadas ainda na graduação pelo programa G-PG.</p>
+      <p>Na <strong>PMWEB</strong>, atuo como Business Analytics — construindo dashboards, analisando funis de conversão e traduzindo dados de alto volume em decisões de negócio para e-commerces de grande tráfego. Na <strong>Apple Developer Academy</strong>, desenvolvo apps em Swift/SwiftUI e lidero squads como Product Owner e Scrum Master.</p>
+      <p>Meu diferencial é unir <strong>pensamento analítico</strong> com <strong>visão de produto</strong>: sei treinar o modelo e entendo por que ele importa pro negócio. Tenho apps na App Store e premiações internacionais em pesquisa aplicada.</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-value">7º</div>
+        <div class="metric-label">Semestre — Ciência de Dados & IA</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3+</div>
+        <div class="metric-label">Premiações internacionais</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">PO</div>
+        <div class="metric-label">Product Owner & Scrum Master</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">iOS</div>
+        <div class="metric-label">Apps publicados na App Store</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="section sr" id="expertise">
+  <div class="section-label">// expertise</div>
+  <div class="section-heading">O que eu faço.</div>
+  <div class="section-desc">Três dimensões que se reforçam: ciência de dados, liderança de produto e engenharia.</div>
+
+  <div class="pillars">
+    <div class="pillar" data-a="p">
+      <div class="pillar-icon" style="background:var(--purple-dim)">🧠</div>
+      <h3>Machine Learning & Deep Learning</h3>
+      <p>Modelos supervisionados e não-supervisionados, CNNs, RNNs, Transformers, visão computacional e NLP — da exploração ao deploy.</p>
+      <div class="tags">
+        <span class="tag tag-p">Python</span><span class="tag tag-p">TensorFlow</span><span class="tag tag-p">PyTorch</span><span class="tag tag-p">Scikit-Learn</span>
+      </div>
+    </div>
+    <div class="pillar" data-a="k">
+      <div class="pillar-icon" style="background:var(--pink-dim)">📊</div>
+      <h3>Business Analytics & Data Viz</h3>
+      <p>Dashboards interativos, KPIs, funis de conversão, testes A/B e análise de e-commerces de alto tráfego. Dados que viram ação.</p>
+      <div class="tags">
+        <span class="tag tag-k">Power BI</span><span class="tag tag-k">Looker Studio</span><span class="tag tag-k">SQL</span><span class="tag tag-k">GA4</span>
+      </div>
+    </div>
+    <div class="pillar" data-a="c">
+      <div class="pillar-icon" style="background:var(--cyan-dim)">🚀</div>
+      <h3>Product & Agile Leadership</h3>
+      <p>Gestão como PO e SM em squads multidisciplinares. Backlog, rituais ágeis, Lean e Design Thinking aplicados ao dia a dia.</p>
+      <div class="tags">
+        <span class="tag tag-c">Scrum</span><span class="tag tag-c">Lean</span><span class="tag tag-c">Design Thinking</span><span class="tag tag-c">MVP</span>
+      </div>
+    </div>
+    <div class="pillar" data-a="a">
+      <div class="pillar-icon" style="background:var(--amber-dim)">📱</div>
+      <h3>iOS Development</h3>
+      <p>Apps nativos em Swift e SwiftUI, Human Interface Guidelines, acessibilidade e exploração de Apple Intelligence.</p>
+      <div class="tags">
+        <span class="tag tag-a">Swift</span><span class="tag tag-a">SwiftUI</span><span class="tag tag-a">HIG</span>
+      </div>
+    </div>
+    <div class="pillar" data-a="g">
+      <div class="pillar-icon" style="background:rgba(16,185,129,0.12)">☁️</div>
+      <h3>Big Data & Cloud</h3>
+      <p>Infraestrutura em nuvem, pipelines de dados em escala e disciplinas de mestrado cursadas na graduação.</p>
+      <div class="tags">
+        <span class="tag tag-c">Cloud</span><span class="tag tag-c">Big Data</span><span class="tag tag-c">Pipelines</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section sr" id="experience">
+  <div class="section-label">// experiência</div>
+  <div class="section-heading">Onde estou construindo.</div>
+  <div class="timeline">
+    <div class="tl-item now">
+      <div class="tl-date">fev/2025 — presente</div>
+      <div class="tl-role">Apple Developer Academy</div>
+      <div class="tl-org">Apple — Programa Internacional Presencial</div>
+      <div class="tl-desc">Desenvolvimento de apps em Swift/SwiftUI, gestão de produto como PO e SM, exploração de Apple Intelligence e entrega contínua de MVPs em squads multidisciplinares com metodologias Lean e Design Thinking.</div>
+    </div>
+    <div class="tl-item now">
+      <div class="tl-date">ago/2024 — presente</div>
+      <div class="tl-role">Business Analytics</div>
+      <div class="tl-org">PMWEB (PM Comunicação LTDA) — Estágio Híbrido</div>
+      <div class="tl-desc">Análise de funis de conversão em e-commerces de alto tráfego, dashboards em Power BI e Looker Studio, consultas SQL, GA4 e KPIs para testes A/B.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section sr" id="projects">
+  <div class="section-label">// projetos</div>
+  <div class="section-heading">O que estou criando.</div>
+  <div class="section-desc">De modelos de ML a apps na App Store — aqui é onde teoria vira prática.</div>
+
+  <div class="projects-grid">
+    <div class="proj featured">
+      <div class="proj-type" style="color:var(--amber)">🏆 destaque · pesquisa</div>
+      <h3>Protetor contra Águas-Vivas</h3>
+      <p>Projeto de P&D premiado internacionalmente em feiras como CASTIC (China), ICYS (Sérvia) e MOSTRATEC (Brasil). Reconhecido por inovação, impacto econômico e potencial de mercado.</p>
+      <div class="tags">
+        <span class="tag tag-a">P&D</span><span class="tag tag-a">Inovação</span><span class="tag tag-a">Premiação Internacional</span>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-type" style="color:var(--purple)">machine learning · deep learning</div>
+      <h3>Redes Neurais & NLP</h3>
+      <p>Implementações de CNNs, RNNs e Transformers para visão computacional e processamento de linguagem natural com rigor acadêmico.</p>
+      <div class="tags">
+        <span class="tag tag-p">Python</span><span class="tag tag-p">TensorFlow</span><span class="tag tag-p">PyTorch</span>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-type" style="color:var(--purple)">não-supervisionado</div>
+      <h3>Clustering & Modelos Geradores</h3>
+      <p>Clusterização, redução de dimensionalidade, detecção de anomalias e modelos geradores como Autoencoders e GANs.</p>
+      <div class="tags">
+        <span class="tag tag-p">Scikit-Learn</span><span class="tag tag-p">PCA</span><span class="tag tag-p">GANs</span>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-type" style="color:var(--pink)">business analytics</div>
+      <h3>Funis de Conversão E-commerce</h3>
+      <p>Pipeline de análise de conversão com dashboards interativos, KPIs customizados e insights para otimização via A/B tests.</p>
+      <div class="tags">
+        <span class="tag tag-k">Power BI</span><span class="tag tag-k">SQL</span><span class="tag tag-k">GA4</span>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-type" style="color:var(--cyan)">ios · app store</div>
+      <h3>Apps na App Store</h3>
+      <p>Aplicações nativas desenvolvidas na Apple Developer Academy com Swift/SwiftUI, acessibilidade e design seguindo HIG.</p>
+      <div class="tags">
+        <span class="tag tag-c">Swift</span><span class="tag tag-c">SwiftUI</span><span class="tag tag-c">App Store</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="section sr">
+  <div class="section-label">// premiações</div>
+  <div class="section-heading">Reconhecimento internacional.</div>
+  <div class="awards-row">
+    <div class="award">
+      <div class="award-flag">🇨🇳</div>
+      <h4>CASTIC — China</h4>
+      <p>Premiação em feira científica internacional por pesquisa em inovação aplicada.</p>
+      <div class="award-year">2017</div>
+    </div>
+    <div class="award">
+      <div class="award-flag">🇷🇸</div>
+      <h4>ICYS — Sérvia</h4>
+      <p>Reconhecimento por inovação e aplicabilidade industrial da pesquisa.</p>
+      <div class="award-year">2017</div>
+    </div>
+    <div class="award">
+      <div class="award-flag">🇧🇷</div>
+      <h4>MOSTRATEC — Brasil</h4>
+      <p>Destaque em pesquisa aplicada e desenvolvimento de produto validado.</p>
+      <div class="award-year">2017</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section sr" id="education">
+  <div class="section-label">// formação</div>
+  <div class="section-heading">Base acadêmica.</div>
+  <div class="edu">
+    <h3>Ciência de Dados e Inteligência Artificial</h3>
+    <div class="edu-inst">PUCRS — Pontifícia Universidade Católica do RS</div>
+    <div class="edu-period">mar/2023 — presente · 7º semestre</div>
+    <div class="chip-row">
+      <span class="chip">Deep Learning</span><span class="chip">NLP</span><span class="chip">Computer Vision</span><span class="chip">Clustering</span><span class="chip">Álgebra Linear</span><span class="chip">Estatística</span>
+    </div>
+  </div>
+  <div class="edu">
+    <h3>Programa G-PG — Mestrado na Graduação</h3>
+    <div class="edu-inst">PUCRS</div>
+    <div class="edu-period">ago/2024 — dez/2024</div>
+    <div class="chip-row">
+      <span class="chip">Redes Neurais Profundas</span><span class="chip">Big Data</span><span class="chip">Cloud Computing</span>
+    </div>
+  </div>
+  <div class="edu">
+    <h3>Curso Técnico de Química</h3>
+    <div class="edu-inst">Fundação Liberato Salzano Vieira da Cunha</div>
+    <div class="edu-period">fev/2014 — fev/2019</div>
+    <div class="chip-row">
+      <span class="chip">P&D</span><span class="chip">Análise de Produtos</span><span class="chip">Pesquisa Científica</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section sr" id="contact">
+  <div class="section-label">// contato</div>
+  <div class="section-heading">Vamos conversar?</div>
+  <div class="section-desc" style="margin-left:auto;margin-right:auto;">
+    Aberta a oportunidades em Data Science, Machine Learning, Product Management e projetos inovadores.
+  </div>
+  <div class="contact-grid">
+    <a href="mailto:bruna.marschner@hotmail.com" class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      Email
+    </a>
+    <a href="https://linkedin.com/in/brunamarschner/" target="_blank" class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/BrunaMarschner" target="_blank" class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+      GitHub
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Feito com <span>♥</span> por Bruna Marschner — 2025</p>
+</footer>
+
+<script>
+// Neural Network Canvas
+(function(){
+  const c=document.getElementById('neuralCanvas'),x=c.getContext('2d');
+  let W,H,nodes=[],mouse={x:-999,y:-999};
+  const N=65,D=160;
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}
+  window.addEventListener('resize',resize);resize();
+  for(let i=0;i<N;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+1,p:Math.random()*Math.PI*2});
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top});
+  c.addEventListener('mouseleave',()=>{mouse.x=-999;mouse.y=-999});
+  function draw(){
+    x.clearRect(0,0,W,H);
+    for(let n of nodes){
+      n.x+=n.vx;n.y+=n.vy;n.p+=.015;
+      if(n.x<0||n.x>W)n.vx*=-1;
+      if(n.y<0||n.y>H)n.vy*=-1;
+      const dx=n.x-mouse.x,dy=n.y-mouse.y,md=Math.sqrt(dx*dx+dy*dy);
+      if(md<120){n.x+=dx/md*1.2;n.y+=dy/md*1.2}
+      x.beginPath();x.arc(n.x,n.y,n.r,0,Math.PI*2);
+      x.fillStyle=`rgba(139,92,246,${.4+Math.sin(n.p)*.3})`;x.fill();
+    }
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<D){x.beginPath();x.moveTo(nodes[i].x,nodes[i].y);x.lineTo(nodes[j].x,nodes[j].y);x.strokeStyle=`rgba(139,92,246,${(1-d/D)*.15})`;x.lineWidth=.6;x.stroke()}
+    }
+    const t=Date.now()*.001;
+    for(let i=0;i<6;i++){
+      const a=nodes[i*7%nodes.length],b=nodes[(i*13+3)%nodes.length];
+      const dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<D*1.2){const pr=((t*.6+i*1.3)%1);x.beginPath();x.arc(a.x+dx*pr,a.y+dy*pr,2,0,Math.PI*2);x.fillStyle=`rgba(236,72,153,${.7-pr*.5})`;x.fill()}
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Marquee clone
+document.getElementById('marquee').innerHTML+=document.getElementById('marquee').innerHTML;
+
+// Scroll reveal
+const sr=document.querySelectorAll('.sr');
+new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1}).observe;
+sr.forEach(el=>new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1}).observe(el));
+
+// Nav compact
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('compact',scrollY>60));
+
+// Mobile menu
+document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('open'));
+document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navMenu').classList.remove('open')));
+</script>
+</body>
+</html>
