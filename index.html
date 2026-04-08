@@ -305,6 +305,12 @@ body::after {
 }
 .sr { opacity:0; transform:translateY(28px); transition: all 0.65s var(--transition); }
 .sr.visible { opacity:1; transform:translateY(0); }
+/* Safety fallback: if JS fails, content still shows after 2s */
+@keyframes srFallback {
+  to { opacity: 1; transform: translateY(0); }
+}
+.sr { animation: srFallback 0.01s 3s forwards; }
+.sr.visible { animation: none; }
 
 /* ABOUT */
 .about-layout {
@@ -1922,8 +1928,32 @@ document.querySelectorAll('[data-scroll-top]').forEach(el => {
 // Marquee clone
 document.getElementById('marquee').innerHTML+=document.getElementById('marquee').innerHTML;
 
-// Scroll reveal
-document.querySelectorAll('.sr').forEach(el=>new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1}).observe(el));
+// Scroll reveal - handles elements already in viewport on page load
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.sr').forEach(el => observer.observe(el));
+
+  // Fallback: force-reveal any element already in viewport (e.g. when loading via #hash)
+  function revealVisibleNow() {
+    document.querySelectorAll('.sr:not(.visible)').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('visible');
+      }
+    });
+  }
+  // Run after layout settles
+  window.addEventListener('load', () => setTimeout(revealVisibleNow, 100));
+  setTimeout(revealVisibleNow, 300);
+})();
 
 // Nav compact
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('compact',scrollY>60));
