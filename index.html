@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bruna Marschner — Data Science & AI</title>
-<meta name="description" content="Data Scientist, AI Engineer, Business Analyst & Product Owner. Portfolio de Bruna Marschner.">
+<meta name="description" content="Data Scientist, AI Engineer, Business Analyst & Product Owner.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,7 +12,6 @@
 :root {
   --bg-0: #060610;
   --bg-1: #0c0c1d;
-  --bg-2: #12122a;
   --bg-card: #14142e;
   --text-0: #eeedf5;
   --text-1: #b0adc4;
@@ -40,7 +39,7 @@
   --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body {
   font-family: var(--font-body);
   background: var(--bg-0);
@@ -76,12 +75,16 @@ body::after {
   font-family: var(--font-display);
   font-size: 1.35rem;
   letter-spacing: -0.03em;
+  cursor: pointer;
 }
 .nav-brand span {
   background: var(--gradient-brand);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
+}
+.nav-right {
+  display:flex; align-items:center; gap:1.8rem;
 }
 .nav-menu { display:flex; gap:1.8rem; list-style:none; }
 .nav-menu a {
@@ -90,6 +93,7 @@ body::after {
   color: var(--text-2);
   transition: color 0.3s;
   position:relative;
+  cursor: pointer;
 }
 .nav-menu a::after {
   content:''; position:absolute;
@@ -100,6 +104,35 @@ body::after {
 }
 .nav-menu a:hover { color: var(--text-0); }
 .nav-menu a:hover::after { width:100%; }
+
+/* LANG TOGGLE */
+.lang-toggle {
+  display:flex; align-items:center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.lang-toggle button {
+  background: none;
+  border: none;
+  color: var(--text-2);
+  padding: 0.35rem 0.7rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+.lang-toggle button.active {
+  background: var(--purple);
+  color: #fff;
+}
+
 .nav-toggle {
   display:none;
   background:none; border:none; cursor:pointer; padding:6px;
@@ -285,7 +318,12 @@ body::after {
   margin-bottom:1.1rem;
   font-size:0.97rem;
 }
-.about-prose strong { color: var(--text-0); }
+.about-prose strong { color: var(--text-0); font-weight: 600; }
+.about-prose em {
+  color: var(--text-0);
+  font-style: italic;
+  font-weight: 500;
+}
 .metrics-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -297,6 +335,10 @@ body::after {
   border-radius: var(--radius-lg);
   padding:1.6rem;
   transition: all 0.35s var(--transition);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
 }
 .metric:hover {
   border-color: var(--purple);
@@ -316,6 +358,15 @@ body::after {
   color: var(--text-2);
   margin-top:0.2rem;
 }
+.metric-hint {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-3);
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.metric:hover .metric-hint { opacity: 1; }
 
 /* EXPERTISE */
 .pillars {
@@ -331,6 +382,11 @@ body::after {
   position:relative;
   overflow:hidden;
   transition: all 0.4s var(--transition);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+  color: inherit;
 }
 .pillar::before {
   content:'';
@@ -359,6 +415,18 @@ body::after {
 }
 .pillar h3 { font-size:1.05rem; font-weight:600; margin-bottom:0.5rem; }
 .pillar p { font-size:0.84rem; color: var(--text-1); line-height:1.65; }
+.pillar-hint {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-3);
+  margin-top: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+.pillar:hover .pillar-hint { opacity: 1; color: var(--purple); }
 .tags { display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.9rem; }
 .tag {
   font-family: var(--font-mono);
@@ -410,8 +478,9 @@ body::after {
   margin-bottom:0.25rem;
 }
 .tl-role { font-size:1.15rem; font-weight:600; margin-bottom:0.15rem; }
-.tl-org { font-size:0.88rem; color: var(--text-2); margin-bottom:0.7rem; }
+.tl-org { font-size:0.88rem; color: var(--text-2); margin-bottom:0.7rem; font-style: italic; }
 .tl-desc { font-size:0.88rem; color: var(--text-1); line-height:1.7; }
+.tl-desc strong { color: var(--text-0); font-weight: 600; }
 
 /* PROJECTS */
 .projects-grid {
@@ -446,6 +515,125 @@ body::after {
 }
 .proj h3 { font-size:1.12rem; font-weight:600; margin-bottom:0.5rem; }
 .proj p { font-size:0.85rem; color: var(--text-1); line-height:1.65; flex:1; }
+.proj p strong { color: var(--text-0); font-weight: 600; }
+
+/* APPS SECTION */
+.apps-grid {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.3rem;
+}
+.app-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: all 0.4s var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.app-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 44px rgba(0,0,0,0.3);
+}
+.app-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.app-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: var(--gradient-subtle);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.app-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 13px;
+}
+.app-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.app-card .app-role {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.app-desc {
+  font-size: 0.87rem;
+  color: var(--text-1);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+.app-desc strong { color: var(--text-0); font-weight: 600; }
+.app-highlight {
+  font-size: 0.82rem;
+  color: var(--text-2);
+  padding: 0.8rem 1rem;
+  background: rgba(139,92,246,0.05);
+  border-left: 2px solid var(--purple);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+.app-team {
+  margin-bottom: 1rem;
+}
+.app-team-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: 0.5rem;
+}
+.app-team-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.app-team-list a {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 5px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  transition: all 0.3s;
+  border: 1px solid transparent;
+}
+.app-team-list a:hover {
+  background: rgba(34,211,238,0.2);
+  border-color: var(--cyan);
+}
+.app-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--purple);
+  font-weight: 600;
+  margin-top: auto;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  transition: color 0.3s;
+}
+.app-link:hover { color: var(--pink); }
 
 /* AWARDS */
 .awards-row {
@@ -462,6 +650,10 @@ body::after {
   border-radius: var(--radius-lg);
   padding:1.4rem 1.6rem;
   transition: all 0.3s var(--transition);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
 }
 .award:hover {
   border-color: var(--amber);
@@ -476,6 +668,15 @@ body::after {
   color: var(--amber);
   margin-top:0.5rem;
 }
+.award-hint {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-3);
+  margin-top: 0.5rem;
+  opacity: 0.6;
+  transition: all 0.3s;
+}
+.award:hover .award-hint { opacity: 1; color: var(--amber); }
 
 /* EDUCATION */
 .edu {
@@ -488,7 +689,7 @@ body::after {
 }
 .edu:hover { border-color: var(--border-hover); }
 .edu h3 { font-size:1.08rem; font-weight:600; margin-bottom:0.2rem; }
-.edu-inst { font-size:0.88rem; color: var(--purple); margin-bottom:0.25rem; }
+.edu-inst { font-size:0.88rem; color: var(--purple); margin-bottom:0.25rem; font-style: italic; }
 .edu-period {
   font-family: var(--font-mono);
   font-size:0.7rem;
@@ -503,6 +704,18 @@ body::after {
   background: var(--cyan-dim);
   color: var(--cyan);
 }
+
+/* RECOMMENDATIONS */
+.recs-placeholder {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-hover);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--text-2);
+}
+.recs-placeholder .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+.recs-placeholder p { font-size: 0.88rem; }
 
 /* CONTACT */
 #contact { text-align:center; }
@@ -536,14 +749,137 @@ body::after {
 .footer p { font-size:0.78rem; color: var(--text-3); }
 .footer span { color: var(--pink); }
 
+/* MODAL */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,6,16,0.85);
+  backdrop-filter: blur(12px);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--transition);
+}
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal {
+  background: var(--bg-1);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-lg);
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2.5rem;
+  position: relative;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.4s var(--transition);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.modal-backdrop.open .modal {
+  transform: translateY(0) scale(1);
+}
+.modal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient-brand);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-1);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+.modal-close:hover {
+  background: var(--purple);
+  color: #fff;
+  border-color: var(--purple);
+}
+.modal-icon {
+  width: 50px; height: 50px;
+  border-radius: var(--radius-sm);
+  background: var(--purple-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+}
+.modal h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.modal-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+.modal-body {
+  color: var(--text-1);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+.modal-body p { margin-bottom: 1rem; }
+.modal-body strong { color: var(--text-0); font-weight: 600; }
+.modal-body em { color: var(--text-0); font-style: italic; }
+.modal-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0;
+}
+.modal-body li {
+  padding: 0.7rem 0 0.7rem 1.5rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.modal-body li:last-child { border-bottom: none; }
+.modal-body li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--purple);
+  font-weight: 600;
+}
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
 /* RESPONSIVE */
 @media(max-width:960px) {
   .pillars { grid-template-columns:1fr 1fr; }
   .projects-grid { grid-template-columns:1fr; }
   .proj.featured { grid-column:span 1; }
   .about-layout { grid-template-columns:1fr; }
+  .apps-grid { grid-template-columns: 1fr; }
 }
 @media(max-width:640px) {
+  .nav { padding: 0.8rem 1.2rem; }
+  .nav.compact { padding: 0.6rem 1.2rem; }
+  .nav-right { gap: 0.8rem; }
   .nav-menu { display:none; }
   .nav-toggle { display:flex; }
   .nav-menu.open {
@@ -558,25 +894,34 @@ body::after {
   .pillars { grid-template-columns:1fr; }
   .hero { padding:7rem 1.5rem 4rem; }
   .section { padding:4rem 1.5rem; }
+  .modal { padding: 2rem 1.5rem; }
 }
 </style>
 </head>
 <body>
 
 <nav class="nav" id="nav">
-  <a href="#" class="nav-brand">bruna<span>.</span></a>
-  <ul class="nav-menu" id="navMenu">
-    <li><a href="#about">Sobre</a></li>
-    <li><a href="#expertise">Expertise</a></li>
-    <li><a href="#experience">Experiência</a></li>
-    <li><a href="#projects">Projetos</a></li>
-    <li><a href="#education">Formação</a></li>
-    <li><a href="#contact">Contato</a></li>
-  </ul>
-  <button class="nav-toggle" id="navToggle" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="#top" class="nav-brand" data-scroll-top>bruna<span>.</span></a>
+  <div class="nav-right">
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+      <li><a href="#expertise" data-i18n="nav.expertise">Expertise</a></li>
+      <li><a href="#experience" data-i18n="nav.experience">Experiência</a></li>
+      <li><a href="#projects" data-i18n="nav.projects">Projetos</a></li>
+      <li><a href="#apps" data-i18n="nav.apps">Apps</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contato</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="active" data-lang="pt">🇧🇷 PT</button>
+      <button data-lang="en">🇺🇸 EN</button>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<div id="top"></div>
 
 <!-- HERO -->
 <section class="hero" id="hero">
@@ -584,16 +929,13 @@ body::after {
   <div class="hero-inner">
     <div class="hero-badge">
       <span class="pulse-dot"></span>
-      Disponível para oportunidades
+      <span data-i18n="hero.badge">Disponível para oportunidades</span>
     </div>
-    <h1>Dados se tornam<br><em>inteligência.</em></h1>
-    <p class="hero-lead">
-      Data Scientist & AI · Business Analytics · Product Owner.
-      Construo modelos, dashboards e produtos que conectam ciência de dados ao impacto real.
-    </p>
+    <h1 data-i18n-html="hero.title">Dados se tornam<br><em>inteligência.</em></h1>
+    <p class="hero-lead" data-i18n="hero.lead">Data Scientist & AI · Business Analytics · Product Owner. Construo modelos, dashboards e produtos que conectam ciência de dados ao impacto real.</p>
     <div class="hero-actions">
-      <a href="#projects" class="btn btn-fill">Ver projetos →</a>
-      <a href="#contact" class="btn btn-outline">Falar comigo</a>
+      <a href="#projects" class="btn btn-fill" data-i18n="hero.cta1">Ver projetos →</a>
+      <a href="#contact" class="btn btn-outline" data-i18n="hero.cta2">Falar comigo</a>
     </div>
   </div>
 </section>
@@ -622,220 +964,346 @@ body::after {
 
 <!-- ABOUT -->
 <section class="section sr" id="about">
-  <div class="section-label">// sobre</div>
-  <div class="section-heading">Dados, produto & criação.</div>
+  <div class="section-label">// <span data-i18n="about.label">sobre</span></div>
+  <div class="section-heading" data-i18n="about.heading">Dados, produto & criação.</div>
   <div class="about-layout">
     <div class="about-prose">
-      <p>Sou estudante de <strong>Ciência de Dados e Inteligência Artificial</strong> na PUCRS (7º semestre), com disciplinas de pós-graduação em Deep Learning, Big Data e Computação em Nuvem cursadas ainda na graduação pelo programa G-PG.</p>
-      <p>Na <strong>PMWEB</strong>, atuo como Business Analytics — construindo dashboards, analisando funis de conversão e traduzindo dados de alto volume em decisões de negócio para e-commerces de grande tráfego. Na <strong>Apple Developer Academy</strong>, desenvolvo apps em Swift/SwiftUI e lidero squads como Product Owner e Scrum Master.</p>
-      <p>Meu diferencial é unir <strong>pensamento analítico</strong> com <strong>visão de produto</strong>: sei treinar o modelo e entendo por que ele importa pro negócio. Tenho apps na App Store e premiações internacionais em pesquisa aplicada.</p>
+      <p data-i18n-html="about.p1">Como <strong>Business Analyst</strong>, atuo na <em>PMWEB</em> construindo <strong>dashboards interativos</strong>, analisando <strong>funis de conversão</strong> e traduzindo dados de alto volume em decisões de negócio para e-commerces de grande tráfego.</p>
+      <p data-i18n-html="about.p2">Como <strong>iOS Developer</strong> e <strong>Product Owner</strong>, faço parte da <em>Apple Developer Academy</em>, onde desenvolvo apps em Swift/SwiftUI e <strong>lidero squads multidisciplinares</strong> como PO e Scrum Master, aplicando Lean e Design Thinking.</p>
+      <p data-i18n-html="about.p3">Paralelamente, sou estudante de <strong>Ciência de Dados e Inteligência Artificial</strong> na PUCRS (7º semestre), com disciplinas de pós-graduação em Deep Learning, Big Data e Computação em Nuvem cursadas ainda na graduação.</p>
+      <p data-i18n-html="about.p4">Meu diferencial é unir <strong>pensamento analítico</strong> com <strong>visão de produto</strong>: sei treinar o modelo e entendo por que ele importa pro negócio.</p>
     </div>
     <div class="metrics-grid">
-      <div class="metric">
+      <button class="metric" data-modal="metric-semester">
         <div class="metric-value">7º</div>
-        <div class="metric-label">Semestre — Ciência de Dados & IA</div>
-      </div>
-      <div class="metric">
+        <div class="metric-label" data-i18n="metric.semester">Semestre — Ciência de Dados & IA</div>
+        <div class="metric-hint" data-i18n="metric.click">clique para saber mais →</div>
+      </button>
+      <button class="metric" data-modal="metric-awards">
         <div class="metric-value">3+</div>
-        <div class="metric-label">Premiações internacionais</div>
-      </div>
-      <div class="metric">
+        <div class="metric-label" data-i18n="metric.awards">Premiações internacionais</div>
+        <div class="metric-hint" data-i18n="metric.click">clique para saber mais →</div>
+      </button>
+      <button class="metric" data-modal="metric-po">
         <div class="metric-value">PO</div>
-        <div class="metric-label">Product Owner & Scrum Master</div>
-      </div>
-      <div class="metric">
-        <div class="metric-value">iOS</div>
-        <div class="metric-label">Apps publicados na App Store</div>
-      </div>
+        <div class="metric-label" data-i18n="metric.po">Product Owner & Scrum Master</div>
+        <div class="metric-hint" data-i18n="metric.click">clique para saber mais →</div>
+      </button>
+      <button class="metric" data-modal="metric-ios">
+        <div class="metric-value">4+</div>
+        <div class="metric-label" data-i18n="metric.ios">Apps publicados na App Store</div>
+        <div class="metric-hint" data-i18n="metric.click">clique para saber mais →</div>
+      </button>
     </div>
   </div>
 </section>
 
 <!-- EXPERTISE -->
 <section class="section sr" id="expertise">
-  <div class="section-label">// expertise</div>
-  <div class="section-heading">O que eu faço.</div>
-  <div class="section-desc">Três dimensões que se reforçam: ciência de dados, liderança de produto e engenharia.</div>
+  <div class="section-label">// <span data-i18n="expertise.label">expertise</span></div>
+  <div class="section-heading" data-i18n="expertise.heading">O que eu faço.</div>
+  <div class="section-desc" data-i18n="expertise.desc">Três dimensões que se reforçam: ciência de dados, liderança de produto e engenharia.</div>
 
   <div class="pillars">
-    <div class="pillar" data-a="p">
+    <button class="pillar" data-a="p" data-modal="pillar-ml">
       <div class="pillar-icon" style="background:var(--purple-dim)">🧠</div>
-      <h3>Machine Learning & Deep Learning</h3>
-      <p>Modelos supervisionados e não-supervisionados, CNNs, RNNs, Transformers, visão computacional e NLP — da exploração ao deploy.</p>
+      <h3 data-i18n="pillar.ml.title">Machine Learning & Deep Learning</h3>
+      <p data-i18n="pillar.ml.desc">Modelos supervisionados e não-supervisionados, CNNs, RNNs, Transformers, visão computacional e NLP — da exploração ao deploy.</p>
       <div class="tags">
         <span class="tag tag-p">Python</span><span class="tag tag-p">TensorFlow</span><span class="tag tag-p">PyTorch</span><span class="tag tag-p">Scikit-Learn</span>
       </div>
-    </div>
-    <div class="pillar" data-a="k">
+      <div class="pillar-hint" data-i18n="pillar.hint">→ clique para ver onde usei</div>
+    </button>
+
+    <button class="pillar" data-a="k" data-modal="pillar-ba">
       <div class="pillar-icon" style="background:var(--pink-dim)">📊</div>
-      <h3>Business Analytics & Data Viz</h3>
-      <p>Dashboards interativos, KPIs, funis de conversão, testes A/B e análise de e-commerces de alto tráfego. Dados que viram ação.</p>
+      <h3 data-i18n="pillar.ba.title">Business Analytics & Data Viz</h3>
+      <p data-i18n="pillar.ba.desc">Dashboards interativos, KPIs, funis de conversão, testes A/B e análise de e-commerces de alto tráfego. Dados que viram ação.</p>
       <div class="tags">
         <span class="tag tag-k">Power BI</span><span class="tag tag-k">Looker Studio</span><span class="tag tag-k">SQL</span><span class="tag tag-k">GA4</span>
       </div>
-    </div>
-    <div class="pillar" data-a="c">
+      <div class="pillar-hint" data-i18n="pillar.hint">→ clique para ver onde usei</div>
+    </button>
+
+    <button class="pillar" data-a="c" data-modal="pillar-product">
       <div class="pillar-icon" style="background:var(--cyan-dim)">🚀</div>
-      <h3>Product & Agile Leadership</h3>
-      <p>Gestão como PO e SM em squads multidisciplinares. Backlog, rituais ágeis, Lean e Design Thinking aplicados ao dia a dia.</p>
+      <h3 data-i18n="pillar.product.title">Product & Agile Leadership</h3>
+      <p data-i18n="pillar.product.desc">Gestão como PO e SM em squads multidisciplinares. Backlog, rituais ágeis, Lean e Design Thinking aplicados ao dia a dia.</p>
       <div class="tags">
         <span class="tag tag-c">Scrum</span><span class="tag tag-c">Lean</span><span class="tag tag-c">Design Thinking</span><span class="tag tag-c">MVP</span>
       </div>
-    </div>
-    <div class="pillar" data-a="a">
+      <div class="pillar-hint" data-i18n="pillar.hint">→ clique para ver onde usei</div>
+    </button>
+
+    <button class="pillar" data-a="a" data-modal="pillar-ios">
       <div class="pillar-icon" style="background:var(--amber-dim)">📱</div>
-      <h3>iOS Development</h3>
-      <p>Apps nativos em Swift e SwiftUI, Human Interface Guidelines, acessibilidade e exploração de Apple Intelligence.</p>
+      <h3 data-i18n="pillar.ios.title">iOS Development</h3>
+      <p data-i18n="pillar.ios.desc">Apps nativos em Swift e SwiftUI, Human Interface Guidelines, acessibilidade e exploração de Apple Intelligence.</p>
       <div class="tags">
         <span class="tag tag-a">Swift</span><span class="tag tag-a">SwiftUI</span><span class="tag tag-a">HIG</span>
       </div>
-    </div>
-    <div class="pillar" data-a="g">
+      <div class="pillar-hint" data-i18n="pillar.hint">→ clique para ver onde usei</div>
+    </button>
+
+    <button class="pillar" data-a="g" data-modal="pillar-cloud">
       <div class="pillar-icon" style="background:rgba(16,185,129,0.12)">☁️</div>
-      <h3>Big Data & Cloud</h3>
-      <p>Infraestrutura em nuvem, pipelines de dados em escala e disciplinas de mestrado cursadas na graduação.</p>
+      <h3 data-i18n="pillar.cloud.title">Big Data & Cloud</h3>
+      <p data-i18n="pillar.cloud.desc">Infraestrutura em nuvem, pipelines de dados em escala e disciplinas de mestrado cursadas na graduação.</p>
       <div class="tags">
         <span class="tag tag-c">Cloud</span><span class="tag tag-c">Big Data</span><span class="tag tag-c">Pipelines</span>
       </div>
-    </div>
+      <div class="pillar-hint" data-i18n="pillar.hint">→ clique para ver onde usei</div>
+    </button>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
 <section class="section sr" id="experience">
-  <div class="section-label">// experiência</div>
-  <div class="section-heading">Onde estou construindo.</div>
+  <div class="section-label">// <span data-i18n="exp.label">experiência</span></div>
+  <div class="section-heading" data-i18n="exp.heading">Onde estou construindo.</div>
   <div class="timeline">
     <div class="tl-item now">
-      <div class="tl-date">fev/2025 — presente</div>
-      <div class="tl-role">Apple Developer Academy</div>
-      <div class="tl-org">Apple — Programa Internacional Presencial</div>
-      <div class="tl-desc">Desenvolvimento de apps em Swift/SwiftUI, gestão de produto como PO e SM, exploração de Apple Intelligence e entrega contínua de MVPs em squads multidisciplinares com metodologias Lean e Design Thinking.</div>
+      <div class="tl-date">fev/2025 — <span data-i18n="exp.present">presente</span></div>
+      <div class="tl-role" data-i18n="exp.apple.role">iOS Developer & Product Owner</div>
+      <div class="tl-org" data-i18n="exp.apple.org">Apple Developer Academy — Programa Internacional</div>
+      <div class="tl-desc" data-i18n-html="exp.apple.desc">Desenvolvimento de apps nativos em <strong>Swift/SwiftUI</strong>, gestão de produto como <strong>PO e Scrum Master</strong>, exploração de <strong>Apple Intelligence</strong> e entrega contínua de MVPs em squads multidisciplinares com metodologias Lean e Design Thinking.</div>
     </div>
     <div class="tl-item now">
-      <div class="tl-date">ago/2024 — presente</div>
-      <div class="tl-role">Business Analytics</div>
-      <div class="tl-org">PMWEB (PM Comunicação LTDA) — Estágio Híbrido</div>
-      <div class="tl-desc">Análise de funis de conversão em e-commerces de alto tráfego, dashboards em Power BI e Looker Studio, consultas SQL, GA4 e KPIs para testes A/B.</div>
+      <div class="tl-date">ago/2024 — <span data-i18n="exp.present">presente</span></div>
+      <div class="tl-role" data-i18n="exp.pmweb.role">Business Analyst</div>
+      <div class="tl-org" data-i18n="exp.pmweb.org">PMWEB (PM Comunicação LTDA)</div>
+      <div class="tl-desc" data-i18n-html="exp.pmweb.desc">Análise de <strong>funis de conversão</strong> em e-commerces de alto tráfego, construção de <strong>dashboards interativos</strong> em Power BI e Looker Studio, consultas SQL, configuração de GA4 e definição de <strong>KPIs para testes A/B</strong>.</div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
 <section class="section sr" id="projects">
-  <div class="section-label">// projetos</div>
-  <div class="section-heading">O que estou criando.</div>
-  <div class="section-desc">De modelos de ML a apps na App Store — aqui é onde teoria vira prática.</div>
+  <div class="section-label">// <span data-i18n="proj.label">projetos</span></div>
+  <div class="section-heading" data-i18n="proj.heading">O que estou criando.</div>
+  <div class="section-desc" data-i18n="proj.desc">De modelos de ML a pesquisa premiada internacionalmente.</div>
 
   <div class="projects-grid">
     <div class="proj featured">
-      <div class="proj-type" style="color:var(--amber)">🏆 destaque · pesquisa</div>
-      <h3>Protetor contra Águas-Vivas</h3>
-      <p>Projeto de P&D premiado internacionalmente em feiras como CASTIC (China), ICYS (Sérvia) e MOSTRATEC (Brasil). Reconhecido por inovação, impacto econômico e potencial de mercado.</p>
+      <div class="proj-type" style="color:var(--amber)">🏆 <span data-i18n="proj.featured.type">destaque · pesquisa</span></div>
+      <h3 data-i18n="proj.jellyfish.title">Protetor contra Águas-Vivas</h3>
+      <p data-i18n-html="proj.jellyfish.desc"><strong>Premiado internacionalmente</strong> em feiras científicas como CASTIC (China), ICYS (Sérvia) e MOSTRATEC (Brasil). Projeto de P&D reconhecido por inovação, impacto econômico e potencial de mercado.</p>
       <div class="tags">
-        <span class="tag tag-a">P&D</span><span class="tag tag-a">Inovação</span><span class="tag tag-a">Premiação Internacional</span>
+        <span class="tag tag-a">P&D</span><span class="tag tag-a" data-i18n="proj.jellyfish.tag1">Inovação</span><span class="tag tag-a" data-i18n="proj.jellyfish.tag2">Premiação Internacional</span>
       </div>
     </div>
     <div class="proj">
       <div class="proj-type" style="color:var(--purple)">machine learning · deep learning</div>
-      <h3>Redes Neurais & NLP</h3>
-      <p>Implementações de CNNs, RNNs e Transformers para visão computacional e processamento de linguagem natural com rigor acadêmico.</p>
+      <h3 data-i18n="proj.nn.title">Redes Neurais & NLP</h3>
+      <p data-i18n="proj.nn.desc">Implementações de CNNs, RNNs e Transformers para visão computacional e processamento de linguagem natural com rigor acadêmico.</p>
       <div class="tags">
         <span class="tag tag-p">Python</span><span class="tag tag-p">TensorFlow</span><span class="tag tag-p">PyTorch</span>
       </div>
     </div>
     <div class="proj">
-      <div class="proj-type" style="color:var(--purple)">não-supervisionado</div>
-      <h3>Clustering & Modelos Geradores</h3>
-      <p>Clusterização, redução de dimensionalidade, detecção de anomalias e modelos geradores como Autoencoders e GANs.</p>
+      <div class="proj-type" style="color:var(--purple)" data-i18n="proj.unsup.type">não-supervisionado</div>
+      <h3 data-i18n="proj.unsup.title">Clustering & Modelos Geradores</h3>
+      <p data-i18n="proj.unsup.desc">Clusterização, redução de dimensionalidade, detecção de anomalias e modelos geradores como Autoencoders e GANs.</p>
       <div class="tags">
         <span class="tag tag-p">Scikit-Learn</span><span class="tag tag-p">PCA</span><span class="tag tag-p">GANs</span>
       </div>
     </div>
     <div class="proj">
       <div class="proj-type" style="color:var(--pink)">business analytics</div>
-      <h3>Funis de Conversão E-commerce</h3>
-      <p>Pipeline de análise de conversão com dashboards interativos, KPIs customizados e insights para otimização via A/B tests.</p>
+      <h3 data-i18n="proj.funnel.title">Funis de Conversão E-commerce</h3>
+      <p data-i18n="proj.funnel.desc">Pipeline de análise de conversão com dashboards interativos, KPIs customizados e insights para otimização via A/B tests.</p>
       <div class="tags">
         <span class="tag tag-k">Power BI</span><span class="tag tag-k">SQL</span><span class="tag tag-k">GA4</span>
       </div>
     </div>
-    <div class="proj">
-      <div class="proj-type" style="color:var(--cyan)">ios · app store</div>
-      <h3>Apps na App Store</h3>
-      <p>Aplicações nativas desenvolvidas na Apple Developer Academy com Swift/SwiftUI, acessibilidade e design seguindo HIG.</p>
-      <div class="tags">
-        <span class="tag tag-c">Swift</span><span class="tag tag-c">SwiftUI</span><span class="tag tag-c">App Store</span>
+  </div>
+</section>
+
+<!-- APPS -->
+<section class="section sr" id="apps">
+  <div class="section-label">// <span data-i18n="apps.label">apps · app store</span></div>
+  <div class="section-heading" data-i18n="apps.heading">Apps publicados na App Store.</div>
+  <div class="section-desc" data-i18n="apps.desc">Apps nativos criados na Apple Developer Academy com squads multidisciplinares.</div>
+
+  <div class="apps-grid">
+
+    <!-- Rise of the Lich King -->
+    <div class="app-card">
+      <div class="app-card-header">
+        <div class="app-icon"><img src="icons/lichking.png" alt="Rise of the Lich King" onerror="this.parentElement.innerHTML='🐉'"></div>
+        <div>
+          <h3>Rise of the Lich King</h3>
+          <div class="app-role" data-i18n="app.role.pm">Project Management & Organization</div>
+        </div>
       </div>
+      <p class="app-desc" data-i18n-html="app.lichking.desc"><strong>Jogo mobile</strong> inspirado em Plants vs Zombies. Atuei na <strong>organização de tasks e do projeto como um todo</strong>, conduzindo as dailies e alinhamentos da squad.</p>
+      <div class="app-highlight" data-i18n="app.lichking.highlight">Primeiro jogo da equipe — sem designer no grupo, nos aventuramos em território novo.</div>
+      <div class="app-team">
+        <div class="app-team-label" data-i18n="app.team">Squad</div>
+        <div class="app-team-list">
+          <a href="https://www.linkedin.com/in/fesulzbach/" target="_blank">Fernando Sulzbach</a>
+          <a href="https://www.linkedin.com/in/anthony-antonelli-andrade/" target="_blank">Anthony Antonelli</a>
+          <a href="https://www.linkedin.com/in/endrew-soares-9716881b9/" target="_blank">Endrew Soares</a>
+          <a href="https://www.linkedin.com/in/gabriel-kowaleski/" target="_blank">Gabriel Kowaleski</a>
+        </div>
+      </div>
+      <a href="https://apps.apple.com/br/app/rise-of-the-lich-king/id6760662821?l=en-GB" target="_blank" class="app-link">
+        <span data-i18n="app.view">Ver na App Store</span> →
+      </a>
     </div>
+
+    <!-- Lens -->
+    <div class="app-card">
+      <div class="app-card-header">
+        <div class="app-icon"><img src="icons/lens.png" alt="Lens" onerror="this.parentElement.innerHTML='📸'"></div>
+        <div>
+          <h3>Lens</h3>
+          <div class="app-role" data-i18n="app.role.dev">iOS Developer</div>
+        </div>
+      </div>
+      <p class="app-desc" data-i18n-html="app.lens.desc">App que recria a experiência de uma <strong>câmera polaroid</strong> no iPhone, com efeitos realistas de revelação e manuseio físico.</p>
+      <div class="app-highlight" data-i18n="app.lens.highlight">Projeto técnico desafiador: Blender, RealityKit, CoreHaptics, CoreMotion, CI/CD e GitHub Actions — o maior desafio foi lidar com 3D.</div>
+      <div class="app-team">
+        <div class="app-team-label" data-i18n="app.team">Squad</div>
+        <div class="app-team-list">
+          <a href="https://www.linkedin.com/in/leonardosimon/" target="_blank">Leonardo Simon</a>
+          <a href="https://www.linkedin.com/in/gabriel-cabreira-barbosa-972ba8247/" target="_blank">Gabriel Cabreira</a>
+          <a href="https://www.linkedin.com/in/diogo-pcamargo/" target="_blank">Diogo Camargo</a>
+          <a href="https://www.linkedin.com/in/fernanda-farias-uberti-34507926b/" target="_blank">Fernanda Uberti</a>
+        </div>
+      </div>
+      <a href="https://apps.apple.com/br/app/lens/id6756274876?l=en-GB" target="_blank" class="app-link">
+        <span data-i18n="app.view">Ver na App Store</span> →
+      </a>
+    </div>
+
+    <!-- Profitto -->
+    <div class="app-card">
+      <div class="app-card-header">
+        <div class="app-icon"><img src="icons/profitto.png" alt="Profitto" onerror="this.parentElement.innerHTML='💼'"></div>
+        <div>
+          <h3>Profitto</h3>
+          <div class="app-role" data-i18n="app.role.dev">iOS Developer</div>
+        </div>
+      </div>
+      <p class="app-desc" data-i18n-html="app.profitto.desc">App de <strong>gerenciamento de negócios para pequenos empresários</strong>, ajudando a controlar vendas, custos e lucro de forma simples e visual.</p>
+      <div class="app-team">
+        <div class="app-team-label" data-i18n="app.team">Squad</div>
+        <div class="app-team-list">
+          <a href="https://www.linkedin.com/in/martina-nogueira-da-gama-adegas/" target="_blank">Martina Gama Adegas</a>
+          <a href="https://www.linkedin.com/in/dsadriel/" target="_blank">Adriel de Souza</a>
+          <a href="https://www.linkedin.com/in/barbara-dapper/" target="_blank">Barbara Dapper</a>
+          <a href="https://www.linkedin.com/in/carolina-silva-dos-santos-a320111a7/" target="_blank">Carolina Silva</a>
+        </div>
+      </div>
+      <a href="https://apps.apple.com/br/app/profitto/id6752310169?l=en-GB" target="_blank" class="app-link">
+        <span data-i18n="app.view">Ver na App Store</span> →
+      </a>
+    </div>
+
+    <!-- Food Swap -->
+    <div class="app-card">
+      <div class="app-card-header">
+        <div class="app-icon"><img src="icons/foodswap.png" alt="Food Swap" onerror="this.parentElement.innerHTML='🍽️'"></div>
+        <div>
+          <h3>Food Swap</h3>
+          <div class="app-role" data-i18n="app.role.dev">iOS Developer</div>
+        </div>
+      </div>
+      <p class="app-desc" data-i18n-html="app.foodswap.desc">App para <strong>ajudar o usuário a decidir o que comer</strong>, trazendo sugestões e substituições personalizadas baseadas em preferências.</p>
+      <div class="app-team">
+        <div class="app-team-label" data-i18n="app.team">Squad</div>
+        <div class="app-team-list">
+          <a href="https://www.linkedin.com/in/lucecyl/" target="_blank">Lucecyl</a>
+          <a href="https://www.linkedin.com/in/richardsros/" target="_blank">Richards Ros</a>
+          <a href="https://www.linkedin.com/in/guilhermeghise/" target="_blank">Guilherme Ghise</a>
+          <a href="https://www.linkedin.com/in/vitor-bruno-243975258/" target="_blank">Vitor Bruno</a>
+        </div>
+      </div>
+      <a href="https://apps.apple.com/br/app/food-swap/id6747597054?l=en-GB" target="_blank" class="app-link">
+        <span data-i18n="app.view">Ver na App Store</span> →
+      </a>
+    </div>
+
   </div>
 </section>
 
 <!-- AWARDS -->
 <section class="section sr">
-  <div class="section-label">// premiações</div>
-  <div class="section-heading">Reconhecimento internacional.</div>
+  <div class="section-label">// <span data-i18n="awards.label">premiações</span></div>
+  <div class="section-heading" data-i18n="awards.heading">Reconhecimento internacional.</div>
   <div class="awards-row">
-    <div class="award">
+    <button class="award" data-modal="award-castic">
       <div class="award-flag">🇨🇳</div>
       <h4>CASTIC — China</h4>
-      <p>Premiação em feira científica internacional por pesquisa em inovação aplicada.</p>
-      <div class="award-year">2017</div>
-    </div>
-    <div class="award">
+      <p data-i18n="awards.castic">Premiação em feira científica internacional por pesquisa em inovação aplicada.</p>
+      <div class="award-year">2018</div>
+      <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
+    </button>
+    <button class="award" data-modal="award-icys">
       <div class="award-flag">🇷🇸</div>
-      <h4>ICYS — Sérvia</h4>
-      <p>Reconhecimento por inovação e aplicabilidade industrial da pesquisa.</p>
-      <div class="award-year">2017</div>
-    </div>
-    <div class="award">
+      <h4>ICYS — <span data-i18n="awards.serbia">Sérvia</span></h4>
+      <p data-i18n="awards.icys">Reconhecimento por inovação e aplicabilidade industrial da pesquisa.</p>
+      <div class="award-year">2018</div>
+      <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
+    </button>
+    <button class="award" data-modal="award-mostratec">
       <div class="award-flag">🇧🇷</div>
-      <h4>MOSTRATEC — Brasil</h4>
-      <p>Destaque em pesquisa aplicada e desenvolvimento de produto validado.</p>
+      <h4>MOSTRATEC — <span data-i18n="awards.brazil">Brasil</span></h4>
+      <p data-i18n="awards.mostratec">Destaque em pesquisa aplicada e desenvolvimento de produto validado.</p>
       <div class="award-year">2017</div>
-    </div>
+      <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
+    </button>
   </div>
 </section>
 
 <!-- EDUCATION -->
 <section class="section sr" id="education">
-  <div class="section-label">// formação</div>
-  <div class="section-heading">Base acadêmica.</div>
+  <div class="section-label">// <span data-i18n="edu.label">formação</span></div>
+  <div class="section-heading" data-i18n="edu.heading">Base acadêmica.</div>
   <div class="edu">
-    <h3>Ciência de Dados e Inteligência Artificial</h3>
-    <div class="edu-inst">PUCRS — Pontifícia Universidade Católica do RS</div>
-    <div class="edu-period">mar/2023 — presente · 7º semestre</div>
+    <h3 data-i18n="edu.ds.title">Ciência de Dados e Inteligência Artificial</h3>
+    <div class="edu-inst" data-i18n="edu.ds.inst">PUCRS — Pontifícia Universidade Católica do RS</div>
+    <div class="edu-period">mar/2023 — <span data-i18n="edu.present">presente</span> · <span data-i18n="edu.semester">7º semestre</span></div>
     <div class="chip-row">
-      <span class="chip">Deep Learning</span><span class="chip">NLP</span><span class="chip">Computer Vision</span><span class="chip">Clustering</span><span class="chip">Álgebra Linear</span><span class="chip">Estatística</span>
+      <span class="chip">Deep Learning</span><span class="chip">NLP</span><span class="chip">Computer Vision</span><span class="chip">Clustering</span><span class="chip" data-i18n="edu.linear">Álgebra Linear</span><span class="chip" data-i18n="edu.stats">Estatística</span>
     </div>
   </div>
   <div class="edu">
-    <h3>Programa G-PG — Mestrado na Graduação</h3>
+    <h3 data-i18n="edu.gpg.title">Programa G-PG — Mestrado na Graduação</h3>
     <div class="edu-inst">PUCRS</div>
     <div class="edu-period">ago/2024 — dez/2024</div>
     <div class="chip-row">
-      <span class="chip">Redes Neurais Profundas</span><span class="chip">Big Data</span><span class="chip">Cloud Computing</span>
+      <span class="chip" data-i18n="edu.nn">Redes Neurais Profundas</span><span class="chip">Big Data</span><span class="chip">Cloud Computing</span>
     </div>
   </div>
   <div class="edu">
-    <h3>Curso Técnico de Química</h3>
+    <h3 data-i18n="edu.chem.title">Curso Técnico de Química</h3>
     <div class="edu-inst">Fundação Liberato Salzano Vieira da Cunha</div>
     <div class="edu-period">fev/2014 — fev/2019</div>
     <div class="chip-row">
-      <span class="chip">P&D</span><span class="chip">Análise de Produtos</span><span class="chip">Pesquisa Científica</span>
+      <span class="chip">P&D</span><span class="chip" data-i18n="edu.chem.chip1">Análise de Produtos</span><span class="chip" data-i18n="edu.chem.chip2">Pesquisa Científica</span>
     </div>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section class="section sr" id="recs">
+  <div class="section-label">// <span data-i18n="recs.label">recomendações</span></div>
+  <div class="section-heading" data-i18n="recs.heading">O que dizem sobre mim.</div>
+  <div class="recs-placeholder">
+    <div class="icon">💬</div>
+    <p data-i18n="recs.soon">Recomendações em breve.</p>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="section sr" id="contact">
-  <div class="section-label">// contato</div>
-  <div class="section-heading">Vamos conversar?</div>
-  <div class="section-desc" style="margin-left:auto;margin-right:auto;">
-    Aberta a oportunidades em Data Science, Machine Learning, Product Management e projetos inovadores.
-  </div>
+  <div class="section-label">// <span data-i18n="contact.label">contato</span></div>
+  <div class="section-heading" data-i18n="contact.heading">Vamos conversar?</div>
+  <div class="section-desc" style="margin-left:auto;margin-right:auto;" data-i18n="contact.desc">Aberta a oportunidades em Data Science, Machine Learning, Product Management e projetos inovadores.</div>
   <div class="contact-grid">
-    <a href="mailto:bruna.marschner@hotmail.com" class="contact-card">
+    <a href="/cdn-cgi/l/email-protection#f89a8a8d9699d695998a8b9b90969d8ab890978c95999194d69b9795" class="contact-card">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       Email
     </a>
@@ -851,11 +1319,571 @@ body::after {
 </section>
 
 <footer class="footer">
-  <p>Feito com <span>♥</span> por Bruna Marschner — 2025</p>
+  <p data-i18n-html="footer">Feito com <span>♥</span> por Bruna Marschner — 2026</p>
 </footer>
 
-<script>
-// Neural Network Canvas
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <div class="modal-icon" id="modalIcon">🧠</div>
+    <div class="modal-subtitle" id="modalSubtitle"></div>
+    <h2 id="modalTitle"></h2>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ========== i18n CONTENT ==========
+const translations = {
+  pt: {
+    "nav.about": "Sobre",
+    "nav.expertise": "Expertise",
+    "nav.experience": "Experiência",
+    "nav.projects": "Projetos",
+    "nav.apps": "Apps",
+    "nav.contact": "Contato",
+    "hero.badge": "Disponível para oportunidades",
+    "hero.title": "Dados se tornam<br><em>inteligência.</em>",
+    "hero.lead": "Data Scientist & AI · Business Analytics · Product Owner. Construo modelos, dashboards e produtos que conectam ciência de dados ao impacto real.",
+    "hero.cta1": "Ver projetos →",
+    "hero.cta2": "Falar comigo",
+    "about.label": "sobre",
+    "about.heading": "Dados, produto & criação.",
+    "about.p1": "Como <strong>Business Analyst</strong>, atuo na <em>PMWEB</em> construindo <strong>dashboards interativos</strong>, analisando <strong>funis de conversão</strong> e traduzindo dados de alto volume em decisões de negócio para e-commerces de grande tráfego.",
+    "about.p2": "Como <strong>iOS Developer</strong> e <strong>Product Owner</strong>, faço parte da <em>Apple Developer Academy</em>, onde desenvolvo apps em Swift/SwiftUI e <strong>lidero squads multidisciplinares</strong> como PO e Scrum Master, aplicando Lean e Design Thinking.",
+    "about.p3": "Paralelamente, sou estudante de <strong>Ciência de Dados e Inteligência Artificial</strong> na PUCRS (7º semestre), com disciplinas de pós-graduação em Deep Learning, Big Data e Computação em Nuvem cursadas ainda na graduação.",
+    "about.p4": "Meu diferencial é unir <strong>pensamento analítico</strong> com <strong>visão de produto</strong>: sei treinar o modelo e entendo por que ele importa pro negócio.",
+    "metric.semester": "Semestre — Ciência de Dados & IA",
+    "metric.awards": "Premiações internacionais",
+    "metric.po": "Product Owner & Scrum Master",
+    "metric.ios": "Apps publicados na App Store",
+    "metric.click": "clique para saber mais →",
+    "expertise.label": "expertise",
+    "expertise.heading": "O que eu faço.",
+    "expertise.desc": "Três dimensões que se reforçam: ciência de dados, liderança de produto e engenharia.",
+    "pillar.ml.title": "Machine Learning & Deep Learning",
+    "pillar.ml.desc": "Modelos supervisionados e não-supervisionados, CNNs, RNNs, Transformers, visão computacional e NLP — da exploração ao deploy.",
+    "pillar.ba.title": "Business Analytics & Data Viz",
+    "pillar.ba.desc": "Dashboards interativos, KPIs, funis de conversão, testes A/B e análise de e-commerces de alto tráfego. Dados que viram ação.",
+    "pillar.product.title": "Product & Agile Leadership",
+    "pillar.product.desc": "Gestão como PO e SM em squads multidisciplinares. Backlog, rituais ágeis, Lean e Design Thinking aplicados ao dia a dia.",
+    "pillar.ios.title": "iOS Development",
+    "pillar.ios.desc": "Apps nativos em Swift e SwiftUI, Human Interface Guidelines, acessibilidade e exploração de Apple Intelligence.",
+    "pillar.cloud.title": "Big Data & Cloud",
+    "pillar.cloud.desc": "Infraestrutura em nuvem, pipelines de dados em escala e disciplinas de mestrado cursadas na graduação.",
+    "pillar.hint": "→ clique para ver onde usei",
+    "exp.label": "experiência",
+    "exp.heading": "Onde estou construindo.",
+    "exp.present": "presente",
+    "exp.apple.role": "iOS Developer & Product Owner",
+    "exp.apple.org": "Apple Developer Academy — Programa Internacional",
+    "exp.apple.desc": "Desenvolvimento de apps nativos em <strong>Swift/SwiftUI</strong>, gestão de produto como <strong>PO e Scrum Master</strong>, exploração de <strong>Apple Intelligence</strong> e entrega contínua de MVPs em squads multidisciplinares com metodologias Lean e Design Thinking.",
+    "exp.pmweb.role": "Business Analyst",
+    "exp.pmweb.org": "PMWEB (PM Comunicação LTDA)",
+    "exp.pmweb.desc": "Análise de <strong>funis de conversão</strong> em e-commerces de alto tráfego, construção de <strong>dashboards interativos</strong> em Power BI e Looker Studio, consultas SQL, configuração de GA4 e definição de <strong>KPIs para testes A/B</strong>.",
+    "proj.label": "projetos",
+    "proj.heading": "O que estou criando.",
+    "proj.desc": "De modelos de ML a pesquisa premiada internacionalmente.",
+    "proj.featured.type": "destaque · pesquisa",
+    "proj.jellyfish.title": "Protetor contra Águas-Vivas",
+    "proj.jellyfish.desc": "<strong>Premiado internacionalmente</strong> em feiras científicas como CASTIC (China), ICYS (Sérvia) e MOSTRATEC (Brasil). Projeto de P&D reconhecido por inovação, impacto econômico e potencial de mercado.",
+    "proj.jellyfish.tag1": "Inovação",
+    "proj.jellyfish.tag2": "Premiação Internacional",
+    "proj.nn.title": "Redes Neurais & NLP",
+    "proj.nn.desc": "Implementações de CNNs, RNNs e Transformers para visão computacional e processamento de linguagem natural com rigor acadêmico.",
+    "proj.unsup.type": "não-supervisionado",
+    "proj.unsup.title": "Clustering & Modelos Geradores",
+    "proj.unsup.desc": "Clusterização, redução de dimensionalidade, detecção de anomalias e modelos geradores como Autoencoders e GANs.",
+    "proj.funnel.title": "Funis de Conversão E-commerce",
+    "proj.funnel.desc": "Pipeline de análise de conversão com dashboards interativos, KPIs customizados e insights para otimização via A/B tests.",
+    "apps.label": "apps · app store",
+    "apps.heading": "Apps publicados na App Store.",
+    "apps.desc": "Apps nativos criados na Apple Developer Academy com squads multidisciplinares.",
+    "app.role.pm": "Project Management & Organization",
+    "app.role.dev": "iOS Developer",
+    "app.team": "Squad",
+    "app.view": "Ver na App Store",
+    "app.lichking.desc": "<strong>Jogo mobile</strong> inspirado em Plants vs Zombies. Atuei na <strong>organização de tasks e do projeto como um todo</strong>, conduzindo as dailies e alinhamentos da squad.",
+    "app.lichking.highlight": "Primeiro jogo da equipe — sem designer no grupo, nos aventuramos em território novo.",
+    "app.lens.desc": "App que recria a experiência de uma <strong>câmera polaroid</strong> no iPhone, com efeitos realistas de revelação e manuseio físico.",
+    "app.lens.highlight": "Projeto técnico desafiador: Blender, RealityKit, CoreHaptics, CoreMotion, CI/CD e GitHub Actions — o maior desafio foi lidar com 3D.",
+    "app.profitto.desc": "App de <strong>gerenciamento de negócios para pequenos empresários</strong>, ajudando a controlar vendas, custos e lucro de forma simples e visual.",
+    "app.foodswap.desc": "App para <strong>ajudar o usuário a decidir o que comer</strong>, trazendo sugestões e substituições personalizadas baseadas em preferências.",
+    "awards.label": "premiações",
+    "awards.heading": "Reconhecimento internacional.",
+    "awards.castic": "Premiação em feira científica internacional por pesquisa em inovação aplicada.",
+    "awards.icys": "Reconhecimento por inovação e aplicabilidade industrial da pesquisa.",
+    "awards.mostratec": "Destaque em pesquisa aplicada e desenvolvimento de produto validado.",
+    "awards.serbia": "Sérvia",
+    "awards.brazil": "Brasil",
+    "awards.hint": "→ ver reportagens",
+    "edu.label": "formação",
+    "edu.heading": "Base acadêmica.",
+    "edu.ds.title": "Ciência de Dados e Inteligência Artificial",
+    "edu.ds.inst": "PUCRS — Pontifícia Universidade Católica do RS",
+    "edu.present": "presente",
+    "edu.semester": "7º semestre",
+    "edu.linear": "Álgebra Linear",
+    "edu.stats": "Estatística",
+    "edu.nn": "Redes Neurais Profundas",
+    "edu.gpg.title": "Programa G-PG — Mestrado na Graduação",
+    "edu.chem.title": "Curso Técnico de Química",
+    "edu.chem.chip1": "Análise de Produtos",
+    "edu.chem.chip2": "Pesquisa Científica",
+    "recs.label": "recomendações",
+    "recs.heading": "O que dizem sobre mim.",
+    "recs.soon": "Recomendações em breve.",
+    "contact.label": "contato",
+    "contact.heading": "Vamos conversar?",
+    "contact.desc": "Aberta a oportunidades em Data Science, Machine Learning, Product Management e projetos inovadores.",
+    "footer": "Feito com <span>♥</span> por Bruna Marschner — 2026"
+  },
+  en: {
+    "nav.about": "About",
+    "nav.expertise": "Expertise",
+    "nav.experience": "Experience",
+    "nav.projects": "Projects",
+    "nav.apps": "Apps",
+    "nav.contact": "Contact",
+    "hero.badge": "Open to opportunities",
+    "hero.title": "Data becomes<br><em>intelligence.</em>",
+    "hero.lead": "Data Scientist & AI · Business Analytics · Product Owner. I build models, dashboards and products that connect data science to real-world impact.",
+    "hero.cta1": "View projects →",
+    "hero.cta2": "Get in touch",
+    "about.label": "about",
+    "about.heading": "Data, product & creation.",
+    "about.p1": "As a <strong>Business Analyst</strong>, I work at <em>PMWEB</em> building <strong>interactive dashboards</strong>, analyzing <strong>conversion funnels</strong> and translating high-volume data into business decisions for high-traffic e-commerces.",
+    "about.p2": "As an <strong>iOS Developer</strong> and <strong>Product Owner</strong>, I'm part of the <em>Apple Developer Academy</em>, where I build Swift/SwiftUI apps and <strong>lead multidisciplinary squads</strong> as PO and Scrum Master, applying Lean and Design Thinking.",
+    "about.p3": "In parallel, I'm a <strong>Data Science and Artificial Intelligence</strong> student at PUCRS (7th semester), with graduate-level coursework in Deep Learning, Big Data and Cloud Computing taken during my undergrad.",
+    "about.p4": "My edge is combining <strong>analytical thinking</strong> with <strong>product vision</strong>: I know how to train the model and why it matters for the business.",
+    "metric.semester": "Semester — Data Science & AI",
+    "metric.awards": "International awards",
+    "metric.po": "Product Owner & Scrum Master",
+    "metric.ios": "Apps published on the App Store",
+    "metric.click": "click to learn more →",
+    "expertise.label": "expertise",
+    "expertise.heading": "What I do.",
+    "expertise.desc": "Three dimensions that reinforce each other: data science, product leadership and engineering.",
+    "pillar.ml.title": "Machine Learning & Deep Learning",
+    "pillar.ml.desc": "Supervised and unsupervised models, CNNs, RNNs, Transformers, computer vision and NLP — from exploration to deployment.",
+    "pillar.ba.title": "Business Analytics & Data Viz",
+    "pillar.ba.desc": "Interactive dashboards, KPIs, conversion funnels, A/B testing and analysis of high-traffic e-commerces. Data that drives action.",
+    "pillar.product.title": "Product & Agile Leadership",
+    "pillar.product.desc": "Management as PO and SM in multidisciplinary squads. Backlog, agile rituals, Lean and Design Thinking applied daily.",
+    "pillar.ios.title": "iOS Development",
+    "pillar.ios.desc": "Native apps in Swift and SwiftUI, Human Interface Guidelines, accessibility and Apple Intelligence exploration.",
+    "pillar.cloud.title": "Big Data & Cloud",
+    "pillar.cloud.desc": "Cloud infrastructure, data pipelines at scale and graduate-level coursework taken during my undergrad.",
+    "pillar.hint": "→ click to see where I used it",
+    "exp.label": "experience",
+    "exp.heading": "Where I'm building.",
+    "exp.present": "present",
+    "exp.apple.role": "iOS Developer & Product Owner",
+    "exp.apple.org": "Apple Developer Academy — International Program",
+    "exp.apple.desc": "Native app development in <strong>Swift/SwiftUI</strong>, product management as <strong>PO and Scrum Master</strong>, <strong>Apple Intelligence</strong> exploration and continuous delivery of MVPs in multidisciplinary squads using Lean and Design Thinking.",
+    "exp.pmweb.role": "Business Analyst",
+    "exp.pmweb.org": "PMWEB (PM Comunicação LTDA)",
+    "exp.pmweb.desc": "Analysis of <strong>conversion funnels</strong> in high-traffic e-commerces, building <strong>interactive dashboards</strong> in Power BI and Looker Studio, SQL queries, GA4 configuration and defining <strong>KPIs for A/B testing</strong>.",
+    "proj.label": "projects",
+    "proj.heading": "What I'm creating.",
+    "proj.desc": "From ML models to internationally awarded research.",
+    "proj.featured.type": "featured · research",
+    "proj.jellyfish.title": "Jellyfish Protector",
+    "proj.jellyfish.desc": "<strong>Internationally awarded</strong> at scientific fairs such as CASTIC (China), ICYS (Serbia) and MOSTRATEC (Brazil). R&D project recognized for innovation, economic impact and market potential.",
+    "proj.jellyfish.tag1": "Innovation",
+    "proj.jellyfish.tag2": "International Award",
+    "proj.nn.title": "Neural Networks & NLP",
+    "proj.nn.desc": "Implementations of CNNs, RNNs and Transformers for computer vision and natural language processing with academic rigor.",
+    "proj.unsup.type": "unsupervised",
+    "proj.unsup.title": "Clustering & Generative Models",
+    "proj.unsup.desc": "Clustering, dimensionality reduction, anomaly detection and generative models such as Autoencoders and GANs.",
+    "proj.funnel.title": "E-commerce Conversion Funnels",
+    "proj.funnel.desc": "Conversion analysis pipeline with interactive dashboards, custom KPIs and insights for optimization via A/B tests.",
+    "apps.label": "apps · app store",
+    "apps.heading": "Apps published on the App Store.",
+    "apps.desc": "Native apps built at the Apple Developer Academy with multidisciplinary squads.",
+    "app.role.pm": "Project Management & Organization",
+    "app.role.dev": "iOS Developer",
+    "app.team": "Squad",
+    "app.view": "View on App Store",
+    "app.lichking.desc": "<strong>Mobile game</strong> inspired by Plants vs Zombies. I led <strong>task and overall project organization</strong>, running dailies and squad alignments.",
+    "app.lichking.highlight": "The team's first game — with no designer in the group, we ventured into new territory.",
+    "app.lens.desc": "App that recreates the <strong>polaroid camera</strong> experience on iPhone, with realistic reveal effects and physical handling.",
+    "app.lens.highlight": "Technically challenging project: Blender, RealityKit, CoreHaptics, CoreMotion, CI/CD and GitHub Actions — the biggest challenge was working with 3D.",
+    "app.profitto.desc": "<strong>Business management app for small business owners</strong>, helping track sales, costs and profit in a simple, visual way.",
+    "app.foodswap.desc": "App to <strong>help users decide what to eat</strong>, providing personalized suggestions and substitutions based on preferences.",
+    "awards.label": "awards",
+    "awards.heading": "International recognition.",
+    "awards.castic": "Award at an international scientific fair for applied innovation research.",
+    "awards.icys": "Recognition for innovation and industrial applicability of the research.",
+    "awards.mostratec": "Highlight in applied research and validated product development.",
+    "awards.serbia": "Serbia",
+    "awards.brazil": "Brazil",
+    "awards.hint": "→ view press coverage",
+    "edu.label": "education",
+    "edu.heading": "Academic foundation.",
+    "edu.ds.title": "Data Science and Artificial Intelligence",
+    "edu.ds.inst": "PUCRS — Pontifical Catholic University of RS",
+    "edu.present": "present",
+    "edu.semester": "7th semester",
+    "edu.linear": "Linear Algebra",
+    "edu.stats": "Statistics",
+    "edu.nn": "Deep Neural Networks",
+    "edu.gpg.title": "G-PG Program — Master's during Undergrad",
+    "edu.chem.title": "Chemistry Technical Course",
+    "edu.chem.chip1": "Product Analysis",
+    "edu.chem.chip2": "Scientific Research",
+    "recs.label": "recommendations",
+    "recs.heading": "What people say about me.",
+    "recs.soon": "Recommendations coming soon.",
+    "contact.label": "contact",
+    "contact.heading": "Let's talk?",
+    "contact.desc": "Open to opportunities in Data Science, Machine Learning, Product Management and innovative projects.",
+    "footer": "Made with <span>♥</span> by Bruna Marschner — 2026"
+  }
+};
+
+// ========== MODAL CONTENT ==========
+const modalContent = {
+  "metric-semester": {
+    icon: "🎓",
+    subtitle: { pt: "formação", en: "education" },
+    title: { pt: "7º Semestre — Ciência de Dados & IA", en: "7th Semester — Data Science & AI" },
+    body: {
+      pt: `<p>Estudo <strong>Ciência de Dados e Inteligência Artificial</strong> na <em>PUCRS</em>, já tendo cursado disciplinas de pós-graduação ainda na graduação pelo programa <strong>G-PG</strong>.</p>
+<p>Entre as áreas que mais me aprofundei:</p>
+<ul>
+<li><strong>Deep Learning & Redes Neurais</strong> — CNNs, RNNs, Transformers</li>
+<li><strong>NLP</strong> — embeddings, análise de sentimentos, sumarização</li>
+<li><strong>Computer Vision</strong> — detecção e classificação</li>
+<li><strong>Aprendizado Não-Supervisionado</strong> — clustering, GANs, Autoencoders</li>
+<li><strong>Big Data & Cloud</strong> — alto desempenho e infraestrutura</li>
+</ul>`,
+      en: `<p>I study <strong>Data Science and Artificial Intelligence</strong> at <em>PUCRS</em>, having already completed graduate-level courses during my undergrad through the <strong>G-PG program</strong>.</p>
+<p>Areas I've gone deepest into:</p>
+<ul>
+<li><strong>Deep Learning & Neural Networks</strong> — CNNs, RNNs, Transformers</li>
+<li><strong>NLP</strong> — embeddings, sentiment analysis, summarization</li>
+<li><strong>Computer Vision</strong> — detection and classification</li>
+<li><strong>Unsupervised Learning</strong> — clustering, GANs, Autoencoders</li>
+<li><strong>Big Data & Cloud</strong> — high performance and infrastructure</li>
+</ul>`
+    }
+  },
+  "metric-awards": {
+    icon: "🏆",
+    subtitle: { pt: "pesquisa & inovação", en: "research & innovation" },
+    title: { pt: "Premiações Internacionais de P&D", en: "International R&D Awards" },
+    body: {
+      pt: `<p>Meu projeto de P&D <strong>"Protetor contra Águas-Vivas"</strong>, desenvolvido durante o Curso Técnico de Química na <em>Fundação Liberato</em>, foi reconhecido em três feiras científicas internacionais:</p>
+<ul>
+<li><strong>🇨🇳 CASTIC — China</strong> (2017)</li>
+<li><strong>🇷🇸 ICYS — Sérvia</strong> (2017)</li>
+<li><strong>🇧🇷 MOSTRATEC — Brasil</strong> (2017)</li>
+</ul>
+<p>O projeto foi reconhecido por inovação, aplicabilidade industrial, impacto econômico e potencial de mercado, com resultados validados por testes.</p>`,
+      en: `<p>My R&D project <strong>"Jellyfish Protector"</strong>, developed during the Chemistry Technical Course at <em>Fundação Liberato</em>, was recognized at three international scientific fairs:</p>
+<ul>
+<li><strong>🇨🇳 CASTIC — China</strong> (2017)</li>
+<li><strong>🇷🇸 ICYS — Serbia</strong> (2017)</li>
+<li><strong>🇧🇷 MOSTRATEC — Brazil</strong> (2017)</li>
+</ul>
+<p>The project was recognized for innovation, industrial applicability, economic impact and market potential, with results validated through testing.</p>`
+    }
+  },
+  "metric-po": {
+    icon: "🚀",
+    subtitle: { pt: "liderança ágil", en: "agile leadership" },
+    title: { pt: "Product Owner & Scrum Master", en: "Product Owner & Scrum Master" },
+    body: {
+      pt: `<p>Na <em>Apple Developer Academy</em>, atuo como <strong>Product Owner</strong> e <strong>Scrum Master</strong> em squads multidisciplinares, conduzindo o ciclo completo de produto.</p>
+<p>Responsabilidades:</p>
+<ul>
+<li><strong>Priorização de backlog</strong> e planejamento de sprints</li>
+<li><strong>Rituais ágeis</strong> — dailies, retros, reviews</li>
+<li>Aplicação de <strong>Lean e Design Thinking</strong></li>
+<li>Entrega contínua de MVPs</li>
+<li>Alinhamento entre devs, designers e stakeholders</li>
+</ul>
+<p>Destaque: organização geral e rituais no projeto <strong>Rise of the Lich King</strong>.</p>`,
+      en: `<p>At the <em>Apple Developer Academy</em>, I work as a <strong>Product Owner</strong> and <strong>Scrum Master</strong> in multidisciplinary squads, driving the full product cycle.</p>
+<p>Responsibilities:</p>
+<ul>
+<li><strong>Backlog prioritization</strong> and sprint planning</li>
+<li><strong>Agile rituals</strong> — dailies, retros, reviews</li>
+<li>Applying <strong>Lean and Design Thinking</strong></li>
+<li>Continuous MVP delivery</li>
+<li>Alignment between devs, designers and stakeholders</li>
+</ul>
+<p>Highlight: overall organization and rituals on the <strong>Rise of the Lich King</strong> project.</p>`
+    }
+  },
+  "metric-ios": {
+    icon: "📱",
+    subtitle: { pt: "app store", en: "app store" },
+    title: { pt: "Apps Publicados", en: "Published Apps" },
+    body: {
+      pt: `<p>Tenho <strong>4 apps publicados na App Store</strong>, todos desenvolvidos na <em>Apple Developer Academy</em> com squads multidisciplinares:</p>
+<ul>
+<li><strong>Rise of the Lich King</strong> — jogo mobile (Project Management)</li>
+<li><strong>Lens</strong> — câmera polaroid com 3D (iOS Developer)</li>
+<li><strong>Profitto</strong> — gestão de negócios (iOS Developer)</li>
+<li><strong>Food Swap</strong> — sugestões alimentares (iOS Developer)</li>
+</ul>
+<p>Cada um explorou tecnologias diferentes: SwiftUI, RealityKit, CoreHaptics, CoreMotion, CI/CD e GitHub Actions.</p>
+<p>→ Veja os detalhes de cada um na seção <strong>Apps</strong>.</p>`,
+      en: `<p>I have <strong>4 apps published on the App Store</strong>, all developed at the <em>Apple Developer Academy</em> with multidisciplinary squads:</p>
+<ul>
+<li><strong>Rise of the Lich King</strong> — mobile game (Project Management)</li>
+<li><strong>Lens</strong> — polaroid camera with 3D (iOS Developer)</li>
+<li><strong>Profitto</strong> — business management (iOS Developer)</li>
+<li><strong>Food Swap</strong> — food suggestions (iOS Developer)</li>
+</ul>
+<p>Each one explored different tech: SwiftUI, RealityKit, CoreHaptics, CoreMotion, CI/CD and GitHub Actions.</p>
+<p>→ Check each one in the <strong>Apps</strong> section.</p>`
+    }
+  },
+  "pillar-ml": {
+    icon: "🧠",
+    subtitle: { pt: "onde usei", en: "where I used it" },
+    title: { pt: "Machine Learning & Deep Learning", en: "Machine Learning & Deep Learning" },
+    body: {
+      pt: `<p>Desenvolvo modelos de ML e Deep Learning principalmente no contexto acadêmico da <em>PUCRS</em>, com aprofundamento nas seguintes áreas:</p>
+<ul>
+<li><strong>Redes Neurais Profundas</strong> — cursada no programa G-PG (pós-graduação na graduação)</li>
+<li><strong>CNNs</strong> para visão computacional — classificação e detecção</li>
+<li><strong>RNNs e Transformers</strong> para NLP — embeddings, sumarização, análise de sentimentos</li>
+<li><strong>Modelos não-supervisionados</strong> — clustering, PCA, detecção de anomalias</li>
+<li><strong>Modelos geradores</strong> — Autoencoders e GANs</li>
+</ul>
+<p>Principais stacks: Python, TensorFlow, PyTorch, Scikit-Learn.</p>`,
+      en: `<p>I develop ML and Deep Learning models mainly in the academic context at <em>PUCRS</em>, with deep dives into:</p>
+<ul>
+<li><strong>Deep Neural Networks</strong> — taken in the G-PG program (graduate-level during undergrad)</li>
+<li><strong>CNNs</strong> for computer vision — classification and detection</li>
+<li><strong>RNNs and Transformers</strong> for NLP — embeddings, summarization, sentiment analysis</li>
+<li><strong>Unsupervised models</strong> — clustering, PCA, anomaly detection</li>
+<li><strong>Generative models</strong> — Autoencoders and GANs</li>
+</ul>
+<p>Main stacks: Python, TensorFlow, PyTorch, Scikit-Learn.</p>`
+    }
+  },
+  "pillar-ba": {
+    icon: "📊",
+    subtitle: { pt: "onde usei", en: "where I used it" },
+    title: { pt: "Business Analytics & Data Viz", en: "Business Analytics & Data Viz" },
+    body: {
+      pt: `<p>Atuo como <strong>Business Analyst</strong> na <em>PMWEB</em>, trabalhando com dados de e-commerces de <strong>alto tráfego</strong>.</p>
+<p>Atividades principais:</p>
+<ul>
+<li>Construção de <strong>dashboards interativos</strong> em Power BI e Looker Studio</li>
+<li>Análise de <strong>funis de conversão</strong> em e-commerces</li>
+<li>Definição de <strong>KPIs para testes A/B</strong></li>
+<li>Configuração e monitoramento no <strong>Google Analytics (GA4)</strong></li>
+<li>Consultas <strong>SQL</strong> em bases de dados de alto volume</li>
+<li>Tradução de requisitos de negócio em análises acionáveis</li>
+</ul>`,
+      en: `<p>I work as a <strong>Business Analyst</strong> at <em>PMWEB</em>, dealing with data from <strong>high-traffic</strong> e-commerces.</p>
+<p>Main activities:</p>
+<ul>
+<li>Building <strong>interactive dashboards</strong> in Power BI and Looker Studio</li>
+<li>Analyzing <strong>conversion funnels</strong> in e-commerces</li>
+<li>Defining <strong>KPIs for A/B testing</strong></li>
+<li>Configuring and monitoring <strong>Google Analytics (GA4)</strong></li>
+<li><strong>SQL</strong> queries on high-volume databases</li>
+<li>Translating business requirements into actionable analyses</li>
+</ul>`
+    }
+  },
+  "pillar-product": {
+    icon: "🚀",
+    subtitle: { pt: "onde usei", en: "where I used it" },
+    title: { pt: "Product & Agile Leadership", en: "Product & Agile Leadership" },
+    body: {
+      pt: `<p>Atuo como <strong>Product Owner</strong> e <strong>Scrum Master</strong> em squads multidisciplinares na <em>Apple Developer Academy</em>.</p>
+<p>Experiências relevantes:</p>
+<ul>
+<li><strong>Rise of the Lich King</strong> — organização de tasks e condução do projeto como um todo, gerenciando dailies e alinhamentos</li>
+<li>Aplicação contínua de <strong>Lean e Design Thinking</strong> na entrega de MVPs</li>
+<li>Priorização de backlog e planejamento de sprints</li>
+<li>Rituais ágeis — dailies, retros, reviews, planning</li>
+<li>Alinhamento entre devs, designers e stakeholders</li>
+</ul>`,
+      en: `<p>I work as a <strong>Product Owner</strong> and <strong>Scrum Master</strong> in multidisciplinary squads at the <em>Apple Developer Academy</em>.</p>
+<p>Relevant experiences:</p>
+<ul>
+<li><strong>Rise of the Lich King</strong> — task organization and overall project conduction, managing dailies and alignments</li>
+<li>Continuous application of <strong>Lean and Design Thinking</strong> in MVP delivery</li>
+<li>Backlog prioritization and sprint planning</li>
+<li>Agile rituals — dailies, retros, reviews, planning</li>
+<li>Alignment between devs, designers and stakeholders</li>
+</ul>`
+    }
+  },
+  "pillar-ios": {
+    icon: "📱",
+    subtitle: { pt: "onde usei", en: "where I used it" },
+    title: { pt: "iOS Development", en: "iOS Development" },
+    body: {
+      pt: `<p>Desenvolvo apps nativos em <strong>Swift e SwiftUI</strong> na <em>Apple Developer Academy</em>, com 4 apps já publicados na <strong>App Store</strong>:</p>
+<ul>
+<li><strong>Lens</strong> — câmera polaroid com Blender, RealityKit, CoreHaptics, CoreMotion, CI/CD</li>
+<li><strong>Profitto</strong> — gerenciamento de negócios para pequenos empresários</li>
+<li><strong>Food Swap</strong> — sugestões e substituições de alimentos</li>
+<li><strong>Rise of the Lich King</strong> — jogo mobile</li>
+</ul>
+<p>Sempre seguindo <strong>Human Interface Guidelines</strong>, práticas de acessibilidade e explorando <strong>Apple Intelligence</strong>.</p>`,
+      en: `<p>I develop native apps in <strong>Swift and SwiftUI</strong> at the <em>Apple Developer Academy</em>, with 4 apps already published on the <strong>App Store</strong>:</p>
+<ul>
+<li><strong>Lens</strong> — polaroid camera with Blender, RealityKit, CoreHaptics, CoreMotion, CI/CD</li>
+<li><strong>Profitto</strong> — business management for small business owners</li>
+<li><strong>Food Swap</strong> — food suggestions and substitutions</li>
+<li><strong>Rise of the Lich King</strong> — mobile game</li>
+</ul>
+<p>Always following <strong>Human Interface Guidelines</strong>, accessibility practices and exploring <strong>Apple Intelligence</strong>.</p>`
+    }
+  },
+  "pillar-cloud": {
+    icon: "☁️",
+    subtitle: { pt: "onde usei", en: "where I used it" },
+    title: { pt: "Big Data & Cloud", en: "Big Data & Cloud" },
+    body: {
+      pt: `<p>Contato com Big Data e Cloud Computing veio pelas disciplinas de <strong>pós-graduação cursadas na graduação</strong> através do programa <em>G-PG</em> da PUCRS:</p>
+<ul>
+<li><strong>Alto Desempenho para Big Data</strong> — pipelines e otimização</li>
+<li><strong>Computação em Nuvem</strong> — infraestrutura e arquiteturas</li>
+</ul>
+<p>Na <em>PMWEB</em>, trabalho na prática com dados de alto volume de e-commerces, integrando diferentes fontes em dashboards e análises.</p>`,
+      en: `<p>My contact with Big Data and Cloud Computing came through <strong>graduate-level courses taken during undergrad</strong> via PUCRS's <em>G-PG program</em>:</p>
+<ul>
+<li><strong>High Performance for Big Data</strong> — pipelines and optimization</li>
+<li><strong>Cloud Computing</strong> — infrastructure and architectures</li>
+</ul>
+<p>At <em>PMWEB</em>, I work hands-on with high-volume e-commerce data, integrating different sources into dashboards and analyses.</p>`
+    }
+  },
+  "award-castic": {
+    icon: "🇨🇳",
+    subtitle: { pt: "china · 2018", en: "china · 2018" },
+    title: { pt: "CASTIC — China", en: "CASTIC — China" },
+    body: {
+      pt: `<p>Participação na <strong>China Adolescents Science & Technology Innovation Contest</strong>, uma das maiores feiras científicas da Ásia, representando o Brasil com o projeto <em>Protetor contra Águas-Vivas</em>.</p>
+<p><strong>Reportagens:</strong></p>
+<ul>
+<li><a href="https://educacaoeterritorio.org.br/reportagens/estudante-brasileira-participa-de-feira-de-ciencias-na-china-com-protetor-contra-queimadura-de-agua-viva/" target="_blank" style="color:var(--purple)">Educação e Território — Estudante brasileira participa de feira de ciências na China ↗</a></li>
+<li><a href="https://www.estado.rs.gov.br/pesquisadora-ganha-medalha-de-bronze-em-feira-de-ciencias-na-china" target="_blank" style="color:var(--purple)">Governo do RS — Pesquisadora ganha medalha de bronze na China ↗</a></li>
+<li><a href="https://mostratec.liberato.com.br/projeto-sera-apresentado-em-feira-de-ciencias-na-china/" target="_blank" style="color:var(--purple)">MOSTRATEC — Projeto será apresentado em feira de ciências na China ↗</a></li>
+</ul>`,
+      en: `<p>Participation in the <strong>China Adolescents Science & Technology Innovation Contest</strong>, one of the largest science fairs in Asia, representing Brazil with the <em>Jellyfish Protector</em> project.</p>
+<p><strong>Press coverage:</strong></p>
+<ul>
+<li><a href="https://educacaoeterritorio.org.br/reportagens/estudante-brasileira-participa-de-feira-de-ciencias-na-china-com-protetor-contra-queimadura-de-agua-viva/" target="_blank" style="color:var(--purple)">Educação e Território — Brazilian student at science fair in China ↗</a></li>
+<li><a href="https://www.estado.rs.gov.br/pesquisadora-ganha-medalha-de-bronze-em-feira-de-ciencias-na-china" target="_blank" style="color:var(--purple)">Government of RS — Researcher wins bronze medal in China ↗</a></li>
+<li><a href="https://mostratec.liberato.com.br/projeto-sera-apresentado-em-feira-de-ciencias-na-china/" target="_blank" style="color:var(--purple)">MOSTRATEC — Project to be presented at science fair in China ↗</a></li>
+</ul>`
+    }
+  },
+  "award-icys": {
+    icon: "🇷🇸",
+    subtitle: { pt: "sérvia · 2018", en: "serbia · 2018" },
+    title: { pt: "ICYS — Sérvia", en: "ICYS — Serbia" },
+    body: {
+      pt: `<p>Participação no <strong>International Conference of Young Scientists</strong>, representando o Brasil na Sérvia com o projeto de pesquisa.</p>
+<p><strong>Reportagem:</strong></p>
+<ul>
+<li><a href="https://medium.com/@cientistabeta/quem-s%C3%A3o-os-jovens-cientistas-representando-o-brasil-na-icys-2018-49a47049991" target="_blank" style="color:var(--purple)">Medium — Quem são os jovens cientistas representando o Brasil na ICYS 2018 ↗</a></li>
+</ul>`,
+      en: `<p>Participation in the <strong>International Conference of Young Scientists</strong>, representing Brazil in Serbia with the research project.</p>
+<p><strong>Press coverage:</strong></p>
+<ul>
+<li><a href="https://medium.com/@cientistabeta/quem-s%C3%A3o-os-jovens-cientistas-representando-o-brasil-na-icys-2018-49a47049991" target="_blank" style="color:var(--purple)">Medium — Young scientists representing Brazil at ICYS 2018 ↗</a></li>
+</ul>`
+    }
+  },
+  "award-mostratec": {
+    icon: "🇧🇷",
+    subtitle: { pt: "brasil · 2017", en: "brazil · 2017" },
+    title: { pt: "MOSTRATEC — Brasil", en: "MOSTRATEC — Brazil" },
+    body: {
+      pt: `<p>A <strong>MOSTRATEC</strong> é uma das maiores feiras de ciência e tecnologia da América Latina, realizada pela <em>Fundação Liberato</em>. Foi onde o projeto <em>Protetor contra Águas-Vivas</em> ganhou destaque e foi selecionado para representar o Brasil internacionalmente.</p>
+<p><strong>Reportagem:</strong></p>
+<ul>
+<li><a href="https://mostratec.liberato.com.br/projeto-sera-apresentado-em-feira-de-ciencias-na-china/" target="_blank" style="color:var(--purple)">MOSTRATEC — Projeto será apresentado em feira de ciências na China ↗</a></li>
+</ul>`,
+      en: `<p><strong>MOSTRATEC</strong> is one of the largest science and technology fairs in Latin America, held by <em>Fundação Liberato</em>. This is where the <em>Jellyfish Protector</em> project stood out and was selected to represent Brazil internationally.</p>
+<p><strong>Press coverage:</strong></p>
+<ul>
+<li><a href="https://mostratec.liberato.com.br/projeto-sera-apresentado-em-feira-de-ciencias-na-china/" target="_blank" style="color:var(--purple)">MOSTRATEC — Project to be presented at science fair in China ↗</a></li>
+</ul>`
+    }
+  }
+};
+
+// ========== i18n ENGINE ==========
+let currentLang = 'pt';
+
+function applyTranslations(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+  const dict = translations[lang];
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+}
+
+document.querySelectorAll('.lang-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => applyTranslations(btn.dataset.lang));
+});
+
+// ========== MODAL SYSTEM ==========
+const backdrop = document.getElementById('modalBackdrop');
+const modalIcon = document.getElementById('modalIcon');
+const modalTitle = document.getElementById('modalTitle');
+const modalSubtitle = document.getElementById('modalSubtitle');
+const modalBody = document.getElementById('modalBody');
+
+function openModal(key) {
+  const data = modalContent[key];
+  if (!data) return;
+  modalIcon.textContent = data.icon;
+  modalTitle.textContent = data.title[currentLang];
+  modalSubtitle.textContent = data.subtitle[currentLang];
+  modalBody.innerHTML = data.body[currentLang];
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('[data-modal]').forEach(el => {
+  el.addEventListener('click', () => openModal(el.getAttribute('data-modal')));
+});
+document.getElementById('modalClose').addEventListener('click', closeModal);
+backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ========== SCROLL TO TOP ON LOGO CLICK ==========
+document.querySelectorAll('[data-scroll-top]').forEach(el => {
+  el.addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// ========== NEURAL CANVAS ==========
 (function(){
   const c=document.getElementById('neuralCanvas'),x=c.getContext('2d');
   let W,H,nodes=[],mouse={x:-999,y:-999};
@@ -895,16 +1923,11 @@ body::after {
 document.getElementById('marquee').innerHTML+=document.getElementById('marquee').innerHTML;
 
 // Scroll reveal
-const sr=document.querySelectorAll('.sr');
-new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1}).observe;
-sr.forEach(el=>new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1}).observe(el));
+document.querySelectorAll('.sr').forEach(el=>new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1}).observe(el));
 
 // Nav compact
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('compact',scrollY>60));
 
 // Mobile menu
 document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('open'));
-document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navMenu').classList.remove('open')));
-</script>
-</body>
-</html>
+document.query
