@@ -1309,7 +1309,7 @@ body::after {
   <div class="section-heading" data-i18n="contact.heading">Vamos conversar?</div>
   <div class="section-desc" style="margin-left:auto;margin-right:auto;" data-i18n="contact.desc">Aberta a oportunidades em Data Science, Machine Learning, Product Management e projetos inovadores.</div>
   <div class="contact-grid">
-    <a href="/cdn-cgi/l/email-protection#f89a8a8d9699d695998a8b9b90969d8ab890978c95999194d69b9795" class="contact-card">
+    <a href="mailto:bruna.marschner@hotmail.com" class="contact-card">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       Email
     </a>
@@ -1339,7 +1339,7 @@ body::after {
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ========== i18n CONTENT ==========
 const translations = {
   pt: {
@@ -1960,4 +1960,14 @@ window.addEventListener('scroll',()=>document.getElementById('nav').classList.to
 
 // Mobile menu
 document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('open'));
-document.query
+
+const navMenu = document.getElementById('navMenu');
+document.querySelectorAll('#navMenu a').forEach(link => {
+  link.addEventListener('click', () => navMenu.classList.remove('open'));
+});
+
+// Initial language
+applyTranslations('pt');
+</script>
+</body>
+</html>
