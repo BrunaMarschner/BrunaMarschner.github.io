@@ -181,6 +181,25 @@ body::after {
   margin-bottom:1.6rem;
   animation: fadeUp 0.7s var(--transition) both;
 }
+.hero-name {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  color: var(--text-1);
+  margin-bottom: 1.4rem;
+  text-transform: uppercase;
+  animation: fadeUp 0.7s 0.06s var(--transition) both;
+}
+.hero-name-line {
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(to right, var(--purple), transparent);
+}
 .pulse-dot {
   width:7px; height:7px;
   border-radius:50%;
@@ -642,28 +661,83 @@ body::after {
 .app-link:hover { color: var(--pink); }
 
 /* AWARDS */
+.awards-wrap {
+  position: relative;
+}
 .awards-row {
-  display:flex; gap:1.2rem;
-  overflow-x:auto;
-  padding-bottom:0.8rem;
-  scrollbar-width:none;
+  display: flex;
+  gap: 1.2rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 1rem 0 1.5rem;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 .awards-row::-webkit-scrollbar { display:none; }
+.awards-row::after {
+  content: '';
+  flex: 0 0 1rem;
+}
+/* Fade gradient on the right to indicate more content */
+.awards-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 1.5rem;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--bg-0));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s;
+  z-index: 2;
+}
+.awards-wrap.scrolled-end::after { opacity: 0; }
+/* Scroll arrow indicator */
+.awards-scroll-hint {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--amber);
+  font-size: 1.2rem;
+  z-index: 3;
+  pointer-events: none;
+  animation: hintPulse 2s ease-in-out infinite;
+  transition: opacity 0.3s;
+}
+.awards-wrap.scrolled-end .awards-scroll-hint { opacity: 0; }
+@keyframes hintPulse {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-50%) translateX(5px); }
+}
 .award {
-  min-width:260px; flex-shrink:0;
+  min-width:280px;
+  flex-shrink:0;
   background: var(--bg-card);
   border:1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding:1.4rem 1.6rem;
+  padding:1.6rem 1.8rem;
   transition: all 0.3s var(--transition);
   cursor: pointer;
   text-align: left;
   font-family: inherit;
   color: inherit;
+  scroll-snap-align: start;
 }
 .award:hover {
   border-color: var(--amber);
-  transform:translateY(-2px);
+  transform:translateY(-4px);
+  box-shadow: 0 16px 40px rgba(245, 158, 11, 0.15);
 }
 .award-flag { font-size:1.7rem; margin-bottom:0.7rem; }
 .award h4 { font-size:0.92rem; font-weight:600; margin-bottom:0.25rem; }
@@ -782,26 +856,34 @@ body::after {
   width: 100%;
   max-height: 85vh;
   overflow-y: auto;
-  padding: 2.5rem;
+  padding: 0;
   position: relative;
   transform: translateY(20px) scale(0.95);
   transition: transform 0.4s var(--transition);
   box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.modal-inner {
+  padding: 2.5rem;
 }
 .modal-backdrop.open .modal {
   transform: translateY(0) scale(1);
 }
 .modal::before {
   content: '';
-  position: absolute;
+  position: sticky;
   top: 0; left: 0; right: 0;
+  display: block;
   height: 3px;
   background: var(--gradient-brand);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  z-index: 2;
 }
 .modal-close {
-  position: absolute;
-  top: 1rem; right: 1rem;
+  position: sticky;
+  float: right;
+  top: 1rem;
+  right: 1rem;
+  margin-right: 1rem;
+  margin-top: -2px;
   width: 32px; height: 32px;
   border-radius: 50%;
   background: var(--bg-card);
@@ -811,6 +893,7 @@ body::after {
   display: flex; align-items: center; justify-content: center;
   font-size: 1.2rem;
   transition: all 0.3s;
+  z-index: 3;
 }
 .modal-close:hover {
   background: var(--purple);
@@ -900,7 +983,7 @@ body::after {
   .pillars { grid-template-columns:1fr; }
   .hero { padding:7rem 1.5rem 4rem; }
   .section { padding:4rem 1.5rem; }
-  .modal { padding: 2rem 1.5rem; }
+  .modal-inner { padding: 2rem 1.5rem; }
 }
 </style>
 </head>
@@ -936,6 +1019,10 @@ body::after {
     <div class="hero-badge">
       <span class="pulse-dot"></span>
       <span data-i18n="hero.badge">Disponível para oportunidades</span>
+    </div>
+    <div class="hero-name">
+      <span class="hero-name-line"></span>
+      <span data-i18n="hero.name">BRUNA MARSCHNER</span>
     </div>
     <h1 data-i18n-html="hero.title">Dados se tornam<br><em>inteligência.</em></h1>
     <p class="hero-lead" data-i18n="hero.lead">Data Scientist & AI · Business Analytics · Product Owner. Construo modelos, dashboards e produtos que conectam ciência de dados ao impacto real.</p>
@@ -1001,6 +1088,39 @@ body::after {
         <div class="metric-hint" data-i18n="metric.click">clique para saber mais →</div>
       </button>
     </div>
+  </div>
+</section>
+
+<!-- AWARDS — moved up for emphasis -->
+<section class="section sr">
+  <div class="section-label">// <span data-i18n="awards.label">premiações</span></div>
+  <div class="section-heading" data-i18n="awards.heading">Reconhecimento internacional.</div>
+  <div class="section-desc" data-i18n="awards.desc">Pesquisa premiada em três feiras científicas internacionais representando o Brasil.</div>
+  <div class="awards-wrap" id="awardsWrap">
+    <div class="awards-row" id="awardsRow">
+      <button class="award" data-modal="award-castic">
+        <div class="award-flag">🇨🇳</div>
+        <h4>CASTIC — China</h4>
+        <p data-i18n="awards.castic">Premiação em feira científica internacional por pesquisa em inovação aplicada.</p>
+        <div class="award-year">2018</div>
+        <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
+      </button>
+      <button class="award" data-modal="award-icys">
+        <div class="award-flag">🇷🇸</div>
+        <h4>ICYS — <span data-i18n="awards.serbia">Sérvia</span></h4>
+        <p data-i18n="awards.icys">Reconhecimento por inovação e aplicabilidade industrial da pesquisa.</p>
+        <div class="award-year">2018</div>
+        <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
+      </button>
+      <button class="award" data-modal="award-mostratec">
+        <div class="award-flag">🇧🇷</div>
+        <h4>MOSTRATEC — <span data-i18n="awards.brazil">Brasil</span></h4>
+        <p data-i18n="awards.mostratec">Destaque em pesquisa aplicada e desenvolvimento de produto validado.</p>
+        <div class="award-year">2017</div>
+        <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
+      </button>
+    </div>
+    <div class="awards-scroll-hint" aria-hidden="true">→</div>
   </div>
 </section>
 
@@ -1234,35 +1354,6 @@ body::after {
   </div>
 </section>
 
-<!-- AWARDS -->
-<section class="section sr">
-  <div class="section-label">// <span data-i18n="awards.label">premiações</span></div>
-  <div class="section-heading" data-i18n="awards.heading">Reconhecimento internacional.</div>
-  <div class="awards-row">
-    <button class="award" data-modal="award-castic">
-      <div class="award-flag">🇨🇳</div>
-      <h4>CASTIC — China</h4>
-      <p data-i18n="awards.castic">Premiação em feira científica internacional por pesquisa em inovação aplicada.</p>
-      <div class="award-year">2018</div>
-      <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
-    </button>
-    <button class="award" data-modal="award-icys">
-      <div class="award-flag">🇷🇸</div>
-      <h4>ICYS — <span data-i18n="awards.serbia">Sérvia</span></h4>
-      <p data-i18n="awards.icys">Reconhecimento por inovação e aplicabilidade industrial da pesquisa.</p>
-      <div class="award-year">2018</div>
-      <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
-    </button>
-    <button class="award" data-modal="award-mostratec">
-      <div class="award-flag">🇧🇷</div>
-      <h4>MOSTRATEC — <span data-i18n="awards.brazil">Brasil</span></h4>
-      <p data-i18n="awards.mostratec">Destaque em pesquisa aplicada e desenvolvimento de produto validado.</p>
-      <div class="award-year">2017</div>
-      <div class="award-hint" data-i18n="awards.hint">→ ver reportagens</div>
-    </button>
-  </div>
-</section>
-
 <!-- EDUCATION -->
 <section class="section sr" id="education">
   <div class="section-label">// <span data-i18n="edu.label">formação</span></div>
@@ -1309,7 +1400,7 @@ body::after {
   <div class="section-heading" data-i18n="contact.heading">Vamos conversar?</div>
   <div class="section-desc" style="margin-left:auto;margin-right:auto;" data-i18n="contact.desc">Aberta a oportunidades em Data Science, Machine Learning, Product Management e projetos inovadores.</div>
   <div class="contact-grid">
-    <a href="mailto:bruna.marschner@hotmail.com" class="contact-card">
+    <a href="/cdn-cgi/l/email-protection#dfbdadaab1bef1b2beadacbcb7b1baad9fb7b0abb2beb6b3f1bcb0b2" class="contact-card">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       Email
     </a>
@@ -1332,14 +1423,16 @@ body::after {
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal">
     <button class="modal-close" id="modalClose" aria-label="Close">×</button>
-    <div class="modal-icon" id="modalIcon">🧠</div>
-    <div class="modal-subtitle" id="modalSubtitle"></div>
-    <h2 id="modalTitle"></h2>
-    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-inner">
+      <div class="modal-icon" id="modalIcon">🧠</div>
+      <div class="modal-subtitle" id="modalSubtitle"></div>
+      <h2 id="modalTitle"></h2>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ========== i18n CONTENT ==========
 const translations = {
   pt: {
@@ -1350,6 +1443,7 @@ const translations = {
     "nav.apps": "Apps",
     "nav.contact": "Contato",
     "hero.badge": "Disponível para oportunidades",
+    "hero.name": "BRUNA MARSCHNER",
     "hero.title": "Dados se tornam<br><em>inteligência.</em>",
     "hero.lead": "Data Scientist & AI · Business Analytics · Product Owner. Construo modelos, dashboards e produtos que conectam ciência de dados ao impacto real.",
     "hero.cta1": "Ver projetos →",
@@ -1418,6 +1512,7 @@ const translations = {
     "app.foodswap.desc": "App para <strong>ajudar o usuário a decidir o que comer</strong>, trazendo sugestões e substituições personalizadas baseadas em preferências.",
     "awards.label": "premiações",
     "awards.heading": "Reconhecimento internacional.",
+    "awards.desc": "Pesquisa premiada em três feiras científicas internacionais representando o Brasil.",
     "awards.castic": "Premiação em feira científica internacional por pesquisa em inovação aplicada.",
     "awards.icys": "Reconhecimento por inovação e aplicabilidade industrial da pesquisa.",
     "awards.mostratec": "Destaque em pesquisa aplicada e desenvolvimento de produto validado.",
@@ -1453,6 +1548,7 @@ const translations = {
     "nav.apps": "Apps",
     "nav.contact": "Contact",
     "hero.badge": "Open to opportunities",
+    "hero.name": "BRUNA MARSCHNER",
     "hero.title": "Data becomes<br><em>intelligence.</em>",
     "hero.lead": "Data Scientist & AI · Business Analytics · Product Owner. I build models, dashboards and products that connect data science to real-world impact.",
     "hero.cta1": "View projects →",
@@ -1521,6 +1617,7 @@ const translations = {
     "app.foodswap.desc": "App to <strong>help users decide what to eat</strong>, providing personalized suggestions and substitutions based on preferences.",
     "awards.label": "awards",
     "awards.heading": "International recognition.",
+    "awards.desc": "Award-winning research featured at three international science fairs representing Brazil.",
     "awards.castic": "Award at an international scientific fair for applied innovation research.",
     "awards.icys": "Recognition for innovation and industrial applicability of the research.",
     "awards.mostratec": "Highlight in applied research and validated product development.",
@@ -1958,16 +2055,27 @@ document.getElementById('marquee').innerHTML+=document.getElementById('marquee')
 // Nav compact
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('compact',scrollY>60));
 
+// Awards horizontal scroll — hide arrow when scrolled to end
+(function() {
+  const row = document.getElementById('awardsRow');
+  const wrap = document.getElementById('awardsWrap');
+  if (!row || !wrap) return;
+  function check() {
+    const scrolledEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 10;
+    wrap.classList.toggle('scrolled-end', scrolledEnd);
+  }
+  row.addEventListener('scroll', check);
+  window.addEventListener('resize', check);
+  // Initial check — hide arrow if there's no overflow (all cards fit)
+  setTimeout(() => {
+    if (row.scrollWidth <= row.clientWidth + 5) {
+      wrap.classList.add('scrolled-end');
+    }
+  }, 100);
+})();
+
 // Mobile menu
 document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('open'));
 
 const navMenu = document.getElementById('navMenu');
-document.querySelectorAll('#navMenu a').forEach(link => {
-  link.addEventListener('click', () => navMenu.classList.remove('open'));
-});
-
-// Initial language
-applyTranslations('pt');
-</script>
-</body>
-</html>
+document.querySelectorAll('#navMenu a').forEach(l
